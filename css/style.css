@@ -469,3 +469,48 @@ max-width:100%;
 }
 
 }
+/* ===========================
+GRID LAYOUT
+=========================== */
+
+.cards-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+
+gap:30px;
+
+margin:50px 0;
+
+}
+
+.cards-grid .card{
+
+text-align:center;
+
+}
+
+.cards-grid h3{
+
+margin-bottom:15px;
+
+font-size:2rem;
+
+}
+
+.cards-grid p{
+
+font-size:1rem;
+
+}
+
+#about-prism,
+#datalabs,
+#yuva,
+#events,
+#about-preview{
+
+padding:110px 0;
+
+}
