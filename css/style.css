@@ -595,3 +595,46 @@ color:#cccccc;
 font-size:.95rem;
 
 }
+
+/* ===========================
+OUR TEAM
+=========================== */
+
+#team .card,
+.cards-grid .card{
+
+text-align:center;
+
+}
+
+.cards-grid .card img{
+
+width:170px;
+
+height:170px;
+
+border-radius:50%;
+
+object-fit:cover;
+
+margin:0 auto 25px;
+
+border:5px solid #ffffff;
+
+box-shadow:0 8px 20px rgba(0,0,0,.12);
+
+}
+
+.cards-grid .card h3{
+
+margin-bottom:10px;
+
+font-size:1.8rem;
+
+}
+
+.cards-grid .card p{
+
+margin-bottom:8px;
+
+}
