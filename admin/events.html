@@ -1,1 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Manage Events | PRISM</title>
+
+<link rel="stylesheet" href="../css/admin.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase.js"></script>
+
+<style>
+
+.page{
+    width:min(1100px,92%);
+    margin:auto;
+    padding:40px 0;
+}
+
+.page h1{
+    color:#7b1e3a;
+    margin-bottom:25px;
+}
+
+form{
+    background:#fff;
+    padding:25px;
+    border-radius:16px;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+    margin-bottom:35px;
+}
+
+input,
+textarea{
+    width:100%;
+    padding:14px;
+    margin-bottom:18px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    font-size:15px;
+}
+
+textarea{
+    resize:vertical;
+    min-height:120px;
+}
+
+button{
+    padding:14px 25px;
+    border:none;
+    border-radius:10px;
+    background:#7b1e3a;
+    color:white;
+    cursor:pointer;
+    font-size:15px;
+}
+
+button:hover{
+    background:#5d162d;
+}
+
+.event-card{
+
+    background:white;
+
+    padding:20px;
+
+    border-radius:14px;
+
+    margin-bottom:20px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+.event-card h3{
+
+    color:#7b1e3a;
+
+    margin-bottom:10px;
+
+}
+
+.delete-btn{
+
+    margin-top:15px;
+
+    background:#b22222;
+
+}
+
+.delete-btn:hover{
+
+    background:#8b0000;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="admin-header">
+
+<div class="container">
+
+<h1 class="logo">PRISM Admin</h1>
+
+<button class="logout-btn" onclick="logout()">
+
+Logout
+
+</button>
+
+</div>
+
+</header>
+
+<div class="page">
+
+<h1>Manage Events</h1>
+
+<form id="eventForm">
+
+<input
+type="text"
+id="title"
+placeholder="Event Title"
+required>
+
+<textarea
+id="description"
+placeholder="Event Description"></textarea>
+
+<input
+type="text"
+id="cover"
+placeholder="Cover Image URL (for now)">
+
+<button type="submit">
+
+Add Event
+
+</button>
+
+</form>
+
+<div id="eventsList"></div>
+
+</div>
+
+<script src="../js/events.js"></script>
+
+</body>
+
+</html>
