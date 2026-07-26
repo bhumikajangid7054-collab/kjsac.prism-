@@ -68,20 +68,33 @@ form.addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
-    const event = {
+    const file =
+document.getElementById("coverImage").files[0];
 
-        title: document.getElementById("title").value,
+let imageUrl = "";
 
-        description: document.getElementById("description").value,
+if(file){
 
-        cover_image: document.getElementById("cover").value,
+    imageUrl = await uploadImage(
+        file,
+        "events"
+    );
 
-        gallery: []
+}
 
-    };
+const event = {
 
-    await addEvent(event);
+    title: document.getElementById("title").value,
 
+    description: document.getElementById("description").value,
+
+    cover_image: imageUrl,
+
+    gallery: []
+
+};
+
+await addEvent(event);
     form.reset();
 
     loadEvents();
