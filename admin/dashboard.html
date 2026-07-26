@@ -1,1 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PRISM Admin Dashboard</title>
+
+<link rel="stylesheet" href="../css/admin.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="../js/supabase.js"></script>
+
+</head>
+
+<body>
+
+<header class="admin-header">
+
+<div class="container">
+
+<h1 class="logo">PRISM Admin</h1>
+
+<button id="logoutBtn" class="logout-btn">
+
+Logout
+
+</button>
+
+</div>
+
+</header>
+
+<section class="dashboard">
+
+<div class="container">
+
+<h2 style="margin-bottom:35px;">
+
+Welcome to the PRISM Admin Dashboard
+
+</h2>
+
+<div class="grid">
+
+<div class="card">
+
+<h3>📅 Events</h3>
+
+<p>
+
+Add, edit and delete department events along with event galleries.
+
+</p>
+
+<a href="events.html">
+
+Manage Events →
+
+</a>
+
+</div>
+
+<div class="card">
+
+<h3>📰 Y.U.V.A.</h3>
+
+<p>
+
+Upload newsletter PDFs and manage previous editions.
+
+</p>
+
+<a href="newsletters.html">
+
+Manage Newsletters →
+
+</a>
+
+</div>
+
+<div class="card">
+
+<h3>📚 Data Labs</h3>
+
+<p>
+
+Upload research papers and policy resources.
+
+</p>
+
+<a href="datalabs.html">
+
+Manage Data Labs →
+
+</a>
+
+</div>
+
+<div class="card">
+
+<h3>👨‍🏫 Faculty</h3>
+
+<p>
+
+Update faculty members and committee information.
+
+</p>
+
+<a href="faculty.html">
+
+Manage Faculty →
+
+</a>
+
+</div>
+
+<div class="card">
+
+<h3>📢 Announcements</h3>
+
+<p>
+
+Publish notices and important departmental announcements.
+
+</p>
+
+<a href="announcements.html">
+
+Manage Announcements →
+
+</a>
+
+</div>
+
+<div class="card">
+
+<h3>🌐 Public Website</h3>
+
+<p>
+
+Open the PRISM website in a new tab.
+
+</p>
+
+<a href="../index.html" target="_blank">
+
+Open Website →
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<script>
+
+protectPage();
+
+document
+.getElementById("logoutBtn")
+.addEventListener("click",logout);
+
+</script>
+
+</body>
+
+</html>
