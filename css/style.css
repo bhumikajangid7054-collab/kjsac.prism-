@@ -1,52 +1,73 @@
-/* ===========================================
-   PRISM Design System
-   Department of Political Science
-   =========================================== */
+/*==================================================
+ PRISM WEBSITE
+ Premium Academic Design System
+ Department of Political Science
+ K. J. Somaiya College of Arts & Commerce
+==================================================*/
 
-/* ---------- Root Variables ---------- */
+
+/*==================================================
+ROOT VARIABLES
+==================================================*/
 
 :root{
 
-    --primary:#6B1E2B;
-    --primary-dark:#541520;
+    --primary:#6B1E3B;
+    --primary-dark:#4F152B;
+    --secondary:#9B6A45;
 
-    --background:#F8F6F1;
+    --background:#FCFBF8;
     --surface:#FFFFFF;
 
-    --text:#2B2B2B;
+    --text:#232323;
     --text-light:#666666;
 
-    --border:#E6E1D8;
+    --border:#E8E2D8;
 
-    --shadow:0 10px 30px rgba(0,0,0,.08);
+    --radius:24px;
 
-    --radius:18px;
+    --shadow-sm:
+        0 8px 20px rgba(0,0,0,.05);
 
-    --transition:.3s ease;
+    --shadow:
+        0 18px 45px rgba(17,24,39,.08);
 
-    --max-width:1200px;
+    --shadow-lg:
+        0 30px 70px rgba(17,24,39,.12);
+
+    --transition:.35s ease;
+
+    --container:1280px;
 
 }
 
-/* ---------- Reset ---------- */
+
+
+/*==================================================
+RESET
+==================================================*/
 
 *{
+
     margin:0;
     padding:0;
     box-sizing:border-box;
+
 }
 
 html{
+
     scroll-behavior:smooth;
+
 }
 
 body{
 
+    font-family:'Inter',sans-serif;
+
     background:var(--background);
 
     color:var(--text);
-
-    font-family:'Inter',sans-serif;
 
     line-height:1.8;
 
@@ -54,9 +75,51 @@ body{
 
 }
 
-/* ---------- Typography ---------- */
+img{
 
-h1,h2,h3,h4{
+    max-width:100%;
+
+    display:block;
+
+}
+
+a{
+
+    color:inherit;
+
+    text-decoration:none;
+
+}
+
+ul{
+
+    list-style:none;
+
+}
+
+button{
+
+    border:none;
+
+    outline:none;
+
+    cursor:pointer;
+
+    font:inherit;
+
+}
+
+
+
+/*==================================================
+TYPOGRAPHY
+==================================================*/
+
+h1,
+h2,
+h3,
+h4,
+h5{
 
     font-family:'Cormorant Garamond',serif;
 
@@ -64,15 +127,26 @@ h1,h2,h3,h4{
 
     font-weight:700;
 
+    line-height:1.15;
+
 }
 
 h1{
-    font-size:4rem;
+
+    font-size:5.4rem;
+
 }
 
 h2{
-    font-size:2.6rem;
-    margin-bottom:25px;
+
+    font-size:3rem;
+
+}
+
+h3{
+
+    font-size:2rem;
+
 }
 
 p{
@@ -81,84 +155,203 @@ p{
 
     font-size:1.05rem;
 
+    line-height:1.9;
+
 }
 
-/* ---------- Images ---------- */
 
-img{
-    max-width:100%;
-    display:block;
-}
 
-/* ---------- Links ---------- */
-
-a{
-    text-decoration:none;
-    color:inherit;
-}
-
-/* ---------- Lists ---------- */
-
-ul{
-    list-style:none;
-}
-
-/* ---------- Universal Container ---------- */
+/*==================================================
+LAYOUT
+==================================================*/
 
 .container{
 
-    width:min(var(--max-width),92%);
+    width:min(var(--container),92%);
 
     margin-inline:auto;
 
 }
 
-/* ---------- Sections ---------- */
-
 section{
 
-    padding:100px 0;
+    padding:120px 0;
 
 }
 
-/* ---------- Section Headings ---------- */
-
-.section-title{
+.text-center{
 
     text-align:center;
+
+}
+
+.mb-2{
 
     margin-bottom:20px;
 
 }
 
+.mb-3{
+
+    margin-bottom:30px;
+
+}
+
+.mb-4{
+
+    margin-bottom:40px;
+
+}
+
+
+
+/*==================================================
+SECTION TITLES
+==================================================*/
+
+.section-title{
+
+    text-align:center;
+
+    margin-bottom:22px;
+
+}
+
 .section-description{
 
-    max-width: 950px;
-    margin: 0 auto;
-    text-align: justify;
-    line-height: 1.9;
-    font-size: 1.08rem;
-}
+    max-width:900px;
+
+    margin:auto;
+
+    text-align:justify;
+
+    color:var(--text-light);
+
+    font-size:1.08rem;
 
 }
 
-/* ---------- Buttons ---------- */
+
+
+/*==================================================
+HEADER
+==================================================*/
+
+.header{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+    background:rgba(255,255,255,.78);
+
+    backdrop-filter:blur(20px);
+
+    -webkit-backdrop-filter:blur(20px);
+
+    border-bottom:1px solid rgba(0,0,0,.05);
+
+}
+
+
+
+.navbar{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:18px 0;
+
+}
+
+
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+}
+
+
+
+.logo img{
+
+    width:66px;
+
+    height:66px;
+
+    object-fit:contain;
+
+}
+
+
+
+.logo-text{
+
+    display:flex;
+
+    flex-direction:column;
+
+    line-height:1.25;
+
+}
+
+
+
+.logo-text h2{
+
+    margin:0;
+
+    font-size:1.9rem;
+
+}
+
+
+
+.logo-text p{
+
+    margin-top:4px;
+
+    font-size:.90rem;
+
+   /*==================================================
+BUTTONS
+==================================================*/
 
 .btn{
 
-    display:inline-block;
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    padding:14px 30px;
+
+    border-radius:999px;
 
     background:var(--primary);
 
     color:#fff;
 
-    padding:14px 34px;
-
-    border-radius:50px;
+    font-size:.95rem;
 
     font-weight:600;
 
     transition:var(--transition);
+
+    box-shadow:0 10px 30px rgba(107,30,59,.18);
 
 }
 
@@ -166,19 +359,304 @@ section{
 
     background:var(--primary-dark);
 
-    transform:translateY(-3px);
+    transform:translateY(-4px);
+
+    box-shadow:0 20px 40px rgba(107,30,59,.25);
 
 }
 
-/* ---------- Cards ---------- */
+.btn-outline{
+
+    background:transparent;
+
+    color:var(--primary);
+
+    border:1px solid var(--primary);
+
+    box-shadow:none;
+
+}
+
+.btn-outline:hover{
+
+    background:var(--primary);
+
+    color:#fff;
+
+}
+
+
+/*==================================================
+CARDS
+==================================================*/
 
 .card{
 
     background:var(--surface);
 
+    border:1px solid var(--border);
+
     border-radius:var(--radius);
 
-    padding:30px;
+    padding:34px;
+
+    box-shadow:var(--shadow);
+
+    transition:var(--transition);
+
+    overflow:hidden;
+
+    position:relative;
+
+}
+
+.card:hover{
+
+    transform:translateY(-10px);
+
+    box-shadow:var(--shadow-lg);
+
+}
+
+.card h3{
+
+    margin-bottom:15px;
+
+}
+
+.card p{
+
+    margin-bottom:20px;
+
+}
+
+
+/*==================================================
+GRID SYSTEM
+==================================================*/
+
+.cards-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(310px,1fr));
+
+    gap:38px;
+
+    margin-top:60px;
+
+}
+
+.two-column{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:60px;
+
+    align-items:center;
+
+}
+
+.three-column{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:35px;
+
+}
+
+
+/*==================================================
+ABOUT PRISM
+==================================================*/
+
+#about-prism{
+
+    position:relative;
+
+}
+
+#about-prism .section-description{
+
+    margin-top:20px;
+
+}
+
+#about-prism::after{
+
+    content:"";
+
+    display:block;
+
+    width:120px;
+
+    height:4px;
+
+    background:var(--primary);
+
+    margin:45px auto 0;
+
+    border-radius:50px;
+
+}
+
+
+/*==================================================
+EXPLORE PRISM
+==================================================*/
+
+#explore-prism{
+
+    background:#fff;
+
+}
+
+.explore-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+
+    gap:35px;
+
+    margin-top:60px;
+
+}
+
+.explore-grid .card{
+
+    text-align:center;
+
+}
+
+.explore-grid .card h3{
+
+    margin-bottom:15px;
+
+}
+
+.explore-grid .card p{
+
+    margin-bottom:25px;
+
+}
+
+.explore-grid .btn{
+
+    width:100%;
+
+}
+
+
+/*==================================================
+GENERAL PAGE SECTIONS
+==================================================*/
+
+#about,
+
+#datalabs,
+
+#yuva,
+
+#events,
+
+#team{
+
+    position:relative;
+
+}
+
+#about::before,
+
+#datalabs::before,
+
+#yuva::before,
+
+#events::before{
+
+    content:"";
+
+    width:70px;
+
+    height:4px;
+
+    background:var(--primary);
+
+    display:block;
+
+    margin:0 auto 40px;
+
+    border-radius:50px;
+
+}
+
+
+/*==================================================
+DATA LABS
+==================================================*/
+
+.domain-heading{
+
+    font-size:2.2rem;
+
+    margin:70px 0 30px;
+
+    padding-left:18px;
+
+    border-left:5px solid var(--primary);
+
+}
+
+.research-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+
+    gap:35px;
+
+}
+
+.research-grid .card{
+
+    min-height:240px;
+
+}
+
+.research-grid h3{
+
+    font-size:1.8rem;
+
+}
+
+
+/*==================================================
+NEWSLETTER
+==================================================*/
+
+.newsletter-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+
+    gap:35px;
+
+    margin-top:60px;
+
+}
+
+.newsletter-card{
+
+    background:#fff;
+
+    border-radius:var(--radius);
+
+    overflow:hidden;
 
     box-shadow:var(--shadow);
 
@@ -186,456 +664,402 @@ section{
 
 }
 
-.card:hover{
+.newsletter-card:hover{
 
-    transform:translateY(-8px);
+    transform:translateY(-10px);
+
+    box-shadow:var(--shadow-lg);
 
 }
 
-/* ---------- Utility ---------- */
+.newsletter-card img{
 
-.text-center{
+    width:100%;
+
+    aspect-ratio:3/4;
+
+    object-fit:cover;
+
+}
+
+.newsletter-content{
+
+    padding
+
+/*==================================================
+EVENTS
+==================================================*/
+
+.events-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+
+    gap:35px;
+
+    margin-top:60px;
+
+}
+
+.events-grid .card{
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+
+    min-height:260px;
+
+}
+
+.events-grid h3{
+
+    margin-bottom:15px;
+
+}
+
+.events-grid p{
+
+    margin-bottom:25px;
+
+}
+
+.events-grid .btn{
+
+    align-self:flex-start;
+
+}
+
+
+
+/*==================================================
+OUR TEAM
+==================================================*/
+
+.team-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+
+    gap:40px;
+
+    margin-top:60px;
+
+}
+
+.team-grid .card{
+
     text-align:center;
-}
-
-.mb-2{
-    margin-bottom:20px;
-}
-
-.mb-3{
-    margin-bottom:30px;
-}
-
-.mb-4{
-    margin-bottom:40px;
-}
-/* ===========================
-HEADER
-=========================== */
-
-.header{
-
-position:sticky;
-
-top:0;
-
-z-index:1000;
-
-background:rgba(248,246,241,.92);
-
-backdrop-filter:blur(14px);
-
-border-bottom:1px solid var(--border);
 
 }
 
-.navbar{
+.team-grid img{
 
-display:flex;
+    width:170px;
 
-justify-content:space-between;
+    height:170px;
 
-align-items:center;
+    margin:0 auto 25px;
 
-padding:18px 0;
+    border-radius:50%;
 
-}
+    object-fit:cover;
 
-.logo{
+    border:6px solid #fff;
 
-display:flex;
+    box-shadow:0 10px 25px rgba(0,0,0,.12);
 
-align-items:center;
-
-gap:18px;
+    transition:.35s ease;
 
 }
 
-.logo img{
+.team-grid .card:hover img{
 
-width:65px;
-
-height:65px;
-
-object-fit:contain;
+    transform:scale(1.05);
 
 }
 
-.logo-text h2{
+.team-grid h3{
 
-font-size:2rem;
-
-margin:0;
-
-line-height:1;
+    margin-bottom:10px;
 
 }
 
-.logo-text p{
+.team-grid p{
 
-font-size:.85rem;
-
-color:var(--text-light);
-
-max-width:260px;
-
-line-height:1.4;
-
-margin-top:6px;
+    margin-bottom:5px;
 
 }
 
-.nav-menu{
 
-display:flex;
 
-gap:35px;
-
-align-items:center;
-
-}
-
-.nav-menu a{
-
-font-weight:600;
-
-transition:.3s;
-
-position:relative;
-
-}
-
-.nav-menu a:hover{
-
-color:var(--primary);
-
-}
-
-.nav-menu a.active{
-
-color:var(--primary);
-
-}
-
-.nav-menu a.active::after{
-
-content:"";
-
-position:absolute;
-
-left:0;
-
-bottom:-8px;
-
-width:100%;
-
-height:2px;
-
-background:var(--primary);
-
-}
-
-/* ===========================
-HERO
-=========================== */
-
-.hero{
-
-min-height:85vh;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-text-align:center;
-
-}
-
-.hero-content{
-
-max-width:850px;
-
-margin:auto;
-
-}
-
-.department{
-
-letter-spacing:4px;
-
-text-transform:uppercase;
-
-font-size:.9rem;
-
-font-weight:600;
-
-color:var(--primary);
-
-margin-bottom:20px;
-
-}
-
-.hero h1{
-
-font-size:6rem;
-
-margin-bottom:15px;
-
-}
-
-.hero h3{
-
-font-size:2rem;
-
-font-family:'Cormorant Garamond',serif;
-
-font-weight:600;
-
-color:var(--text);
-
-margin-bottom:18px;
-
-}
-
-.college{
-
-font-size:1.15rem;
-
-font-weight:500;
-
-margin-bottom:30px;
-
-}
-
-.hero-text{
-
-max-width:720px;
-
-margin:0 auto 45px;
-
-font-size:1.08rem;
-
-}
-
-/* ===========================
-RESPONSIVE
-=========================== */
-
-@media(max-width:900px){
-
-.navbar{
-
-flex-direction:column;
-
-gap:25px;
-
-}
-
-.nav-menu{
-
-flex-wrap:wrap;
-
-justify-content:center;
-
-gap:18px;
-
-}
-
-.hero h1{
-
-font-size:4rem;
-
-}
-
-.hero h3{
-
-font-size:1.6rem;
-
-}
-
-.logo{
-
-flex-direction:column;
-
-text-align:center;
-
-}
-
-.logo-text p{
-
-max-width:100%;
-
-}
-
-}
-/* ===========================
-GRID LAYOUT
-=========================== */
-
-.cards-grid{
-
-display:grid;
-
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-
-gap:30px;
-
-margin:50px 0;
-
-}
-
-.cards-grid .card{
-
-text-align:center;
-
-}
-
-.cards-grid h3{
-
-margin-bottom:15px;
-
-font-size:2rem;
-
-}
-
-.cards-grid p{
-
-font-size:1rem;
-
-}
-
-#about-prism,
-#datalabs,
-#yuva,
-#events,
-#about-preview{
-
-padding:110px 0;
-
-}
-/* ===========================
+/*==================================================
 FOOTER
-=========================== */
+==================================================*/
 
 .footer{
 
-background:#2b2b2b;
+    margin-top:120px;
 
-color:#ffffff;
+    background:#1F1F1F;
 
-padding:70px 0 25px;
+    color:#fff;
 
-margin-top:100px;
+    padding:80px 0 30px;
 
 }
 
 .footer-grid{
 
-display:grid;
+    display:grid;
 
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
 
-gap:50px;
+    gap:50px;
 
 }
 
 .footer h3{
 
-color:#ffffff;
+    color:#fff;
 
-margin-bottom:18px;
-
-font-size:2rem;
+    margin-bottom:18px;
 
 }
 
 .footer p{
 
-color:#dddddd;
+    color:#d8d8d8;
 
-margin-bottom:12px;
-
-line-height:1.8;
+    margin-bottom:12px;
 
 }
 
 .footer a{
 
-color:#dddddd;
+    color:#d8d8d8;
 
-transition:.3s;
+    transition:.3s;
 
 }
 
 .footer a:hover{
 
-color:#ffffff;
+    color:#fff;
 
 }
 
 .footer-bottom{
 
-margin-top:50px;
+    margin-top:50px;
 
-padding-top:20px;
+    padding-top:25px;
 
-border-top:1px solid rgba(255,255,255,.15);
+    border-top:1px solid rgba(255,255,255,.12);
 
-text-align:center;
+    text-align:center;
 
 }
 
 .footer-bottom p{
 
-margin:0;
+    color:#bdbdbd;
 
-color:#cccccc;
-
-font-size:.95rem;
+    font-size:.95rem;
 
 }
 
-/* ===========================
-OUR TEAM
-=========================== */
 
-#team .card,
-.cards-grid .card{
 
-text-align:center;
+/*==================================================
+UTILITY CLASSES
+==================================================*/
 
-}
+.text-center{
 
-.cards-grid .card img{
-
-width:170px;
-
-height:170px;
-
-border-radius:50%;
-
-object-fit:cover;
-
-margin:0 auto 25px;
-
-border:5px solid #ffffff;
-
-box-shadow:0 8px 20px rgba(0,0,0,.12);
+    text-align:center;
 
 }
 
-.cards-grid .card h3{
+.mt-2{
 
-margin-bottom:10px;
-
-font-size:1.8rem;
+    margin-top:20px;
 
 }
 
-.cards-grid .card p{
+.mt-3{
 
-margin-bottom:8px;
+    margin-top:30px;
 
 }
+
+.mt-4{
+
+    margin-top:40px;
+
+}
+
+.mb-2{
+
+    margin-bottom:20px;
+
+}
+
+.mb-3{
+
+    margin-bottom:30px;
+
+}
+
+.mb-4{
+
+    margin-bottom:40px;
+
+}
+
+.rounded{
+
+    border-radius:var(--radius);
+
+}
+
+.shadow{
+
+    box-shadow:var(--shadow);
+
+}
+
+
+
+/*==================================================
+ANIMATIONS
+==================================================*/
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(35px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+.fade-up{
+
+    animation:fadeUp .8s ease both;
+
+}
+
+
+
+/*==================================================
+SCROLLBAR
+==================================================*/
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#f1f1f1;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:var(--primary);
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:var(--primary-dark);
+
+}
+
+
+
+/*==================================================
+RESPONSIVE
+==================================================*/
+
+@media (max-width:992px){
+
+    h1{
+
+        font-size:4rem;
+
+    }
+
+    h2{
+
+        font-size:2.5rem;
+
+    }
+
+    h3{
+
+        font-size:1.7rem;
+
+    }
+
+    .navbar{
+
+        flex-direction:column;
+
+        gap:25px;
+
+    }
+
+    .nav-menu{
+
+        flex-wrap:wrap;
+
+        justify-content:center;
+
+        gap:20px;
+
+    }
+
+    .two-column{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+@media (max-width:768px){
+
+    section{
+
+        padding:80px 0;
+
+    }
+
+    .hero{
+
+        min-height:80vh;
+
+    }
+
+    .hero h1{
