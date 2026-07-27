@@ -907,86 +907,30 @@ a:hover{
    MEMBER CARD
 ====================================================== */
 
-.member-card{
-
-    background:#fff;
-
-    border:1px solid var(--border);
-
-    border-radius:var(--radius);
-
-    padding:35px;
-
-    text-align:center;
-
-    transition:var(--transition);
-
-    box-shadow:var(--shadow);
-
-}
-
-.member-card:hover{
-
-    transform:translateY(-10px);
-
-    box-shadow:var(--shadow-hover);
-
-}
-
-.member-avatar{
+.member-photo{
 
     width:95px;
-
     height:95px;
 
-    margin:0 auto 25px;
+    object-fit:cover;
 
     border-radius:50%;
 
-    background:rgba(107,30,43,.10);
+    border:3px solid var(--primary);
 
-    display:flex;
+    display:block;
 
-    align-items:center;
+    margin:0 auto 20px;
 
-    justify-content:center;
-
-}
-
-.member-avatar i{
-
-    font-size:2.6rem;
-
-    color:var(--primary);
+    transition:var(--transition);
 
 }
 
-.member-card h3{
+.member-card:hover .member-photo{
 
-    margin-bottom:8px;
-
-}
-
-.member-card h4{
-
-    font-family:'Inter',sans-serif;
-
-    font-size:1rem;
-
-    color:var(--accent);
-
-    font-weight:600;
-
-    margin-bottom:15px;
+    transform:scale(1.08);
 
 }
-
-.member-card p{
-
-    font-size:.95rem;
-
-}
-
 
 /* ======================================================
    FACULTY & STUDENT COUNCIL
