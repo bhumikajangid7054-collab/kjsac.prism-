@@ -1,132 +1,99 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>PRISM Admin Login</title>
+    <title>PRISM Admin Login</title>
 
-<link rel="stylesheet" href="../css/admin.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<!-- Supabase CDN -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script src="../js/supabase.js"></script>
-
-<script>
-console.log("Supabase JS loaded");
-console.log(typeof login);
-</script>
+    <link rel="stylesheet" href="../css/admin.css">
 
 </head>
 
 <body>
 
-<div class="login-wrapper">
+    <div class="login-container">
 
-<div class="login-card">
+        <div class="login-card">
 
-<h1>PRISM</h1>
+            <h1>PRISM</h1>
 
-<p>
-Policy and Research Insights, with Society Matters
-</p>
+            <h2>Admin Portal</h2>
 
-<form id="loginForm">
+            <p>
 
-<div class="input-group">
+                Department of Political Science<br>
 
-<label>Email</label>
+                K. J. Somaiya College of Arts & Commerce (Autonomous)<br>
 
-<input
-type="email"
-id="email"
-placeholder="Enter your email"
-required>
+                Reaccredited by NAAC with Grade 'A'
 
-</div>
+            </p>
 
-<div class="input-group">
+            <form id="loginForm">
 
-<label>Password</label>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Email Address"
+                    required>
 
-<input
-type="password"
-id="password"
-placeholder="Enter your password"
-required>
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Password"
+                    required>
 
-</div>
+                <button type="submit">
 
-<button
-type="submit"
-class="btn">
+                    Login
 
-Login
+                </button>
 
-</button>
+            </form>
 
-</form>
+        </div>
 
-<p
-id="message"
-style="margin-top:20px;text-align:center;color:#7b1e3a;font-weight:600;">
-</p>
+    </div>
 
-</div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-</div>
+    <script src="../js/supabase.js"></script>
 
-<script>
+    <script src="../js/auth.js"></script>
 
-const form=document.getElementById("loginForm");
+    <script>
 
-const message=document.getElementById("message");
+        redirectIfLoggedIn();
 
-form.addEventListener("submit",async(e)=>{
+        document
+            .getElementById("loginForm")
+            .addEventListener("submit", async function (e) {
 
-e.preventDefault();
+                e.preventDefault();
 
-const email=document.getElementById("email").value.trim();
+                await login(
 
-const password=document.getElementById("password").value.trim();
+                    document.getElementById("email").value,
 
-try{
+                    document.getElementById("password").value
 
-await login(email,password);
+                );
 
-message.style.color="green";
+            });
 
-message.textContent="Login Successful...";
-
-setTimeout(()=>{
-
-window.location.href="dashboard.html";
-
-},1000);
-
-}
-
-catch(error){
-
-message.style.color="red";
-
-message.textContent=error.message;
-
-}
-
-});
-
-</script>
+    </script>
 
 </body>
 
