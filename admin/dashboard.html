@@ -190,3 +190,123 @@
             <div id="datalabList"></div>
 
         </section>
+
+                <!-- Events -->
+
+        <section id="events"
+
+            class="admin-section hidden">
+
+            <h2>Events</h2>
+
+            <button id="addEvent">
+
+                Add Event
+
+            </button>
+
+            <div id="eventList"></div>
+
+        </section>
+
+        <!-- Event Gallery -->
+
+        <section id="gallery"
+
+            class="admin-section hidden">
+
+            <h2>Event Gallery</h2>
+
+            <button id="addGalleryImage">
+
+                Upload Gallery Image
+
+            </button>
+
+            <div id="galleryList"></div>
+
+        </section>
+
+        <!-- Newsletters -->
+
+        <section id="newsletters"
+
+            class="admin-section hidden">
+
+            <h2>Y.U.V.A. Newsletters</h2>
+
+            <button id="addNewsletter">
+
+                Upload Newsletter
+
+            </button>
+
+            <div id="newsletterList"></div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="../js/supabase.js"></script>
+
+<script src="../js/auth.js"></script>
+
+<script src="../js/dashboard.js"></script>
+
+<script>
+
+protectDashboard();
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+    const buttons=document.querySelectorAll(".nav-btn");
+
+    const sections=document.querySelectorAll(".admin-section");
+
+    buttons.forEach(button=>{
+
+        button.addEventListener("click",()=>{
+
+            if(button.dataset.section===undefined){
+
+                return;
+
+            }
+
+            buttons.forEach(btn=>btn.classList.remove("active"));
+
+            button.classList.add("active");
+
+            sections.forEach(section=>{
+
+                section.classList.add("hidden");
+
+            });
+
+            document
+
+                .getElementById(button.dataset.section)
+
+                .classList.remove("hidden");
+
+        });
+
+    });
+
+    if(typeof loadDashboard==="function"){
+
+        loadDashboard();
+
+    }
+
+});
+
+</script>
+
+</body>
+
+</html>
