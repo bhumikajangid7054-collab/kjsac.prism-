@@ -237,15 +237,27 @@ section{
 
 .logo-text h1{
 
+    font-family:'Cormorant Garamond', serif;
+
+    font-size:3rem;
+
+    font-weight:700;
+
+    color:var(--primary);
+
     margin:0;
+
     line-height:1;
 
 }
 
 .logo-text span{
 
-    margin-top:6px;
+    font-size:1rem;
+
     line-height:1.4;
+
+    margin-top:6px;
 
 }
 
