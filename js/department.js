@@ -21,9 +21,9 @@ async function loadFacultyMembers() {
         <div class="member-card">
 
             <img
-                src="${member.image_url}"
-                alt="${member.name}"
-                class="member-photo">
+    src="${member.image_url}"
+    alt="${member.name}"
+    style="width:120px;height:120px;border-radius:50%;border:3px solid red;">
 
             <h3>${member.name}</h3>
 
