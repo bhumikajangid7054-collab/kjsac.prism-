@@ -391,3 +391,206 @@ function editNewsletter(id) {
     alert("Edit Newsletter: " + id);
 
 }
+/*
+=========================================
+ADD ANNOUNCEMENT
+=========================================
+*/
+
+document.getElementById("addAnnouncement")?.addEventListener("click", async () => {
+
+    const title = prompt("Announcement Title");
+
+    if (!title) return;
+
+    const description = prompt("Announcement Description");
+
+    if (description === null) return;
+
+    const { error } = await supabase
+        .from("announcements")
+        .insert([
+            {
+                title,
+                description
+            }
+        ]);
+
+    if (error) {
+
+        alert(error.message);
+
+        return;
+
+    }
+
+    await loadDashboard();
+
+});
+
+/*
+=========================================
+ADD FACULTY
+=========================================
+*/
+
+document.getElementById("addFaculty")?.addEventListener("click", async () => {
+
+    const name = prompt("Faculty Name");
+
+    if (!name) return;
+
+    const designation = prompt("Designation");
+
+    if (!designation) return;
+
+    const image_url = prompt("Faculty Image URL");
+
+    const { error } = await supabase
+        .from("faculty")
+        .insert([
+            {
+                name,
+                designation,
+                image_url
+            }
+        ]);
+
+    if (error) {
+
+        alert(error.message);
+
+        return;
+
+    }
+
+    await loadDashboard();
+
+});
+
+/*
+=========================================
+ADD DATALAB
+=========================================
+*/
+
+document.getElementById("addDataLab")?.addEventListener("click", async () => {
+
+    const category = prompt("Category");
+
+    if (!category) return;
+
+    const title = prompt("Title");
+
+    if (!title) return;
+
+    const description = prompt("Description");
+
+    const file_url = prompt("Research File URL");
+
+    const cover_image = prompt("Cover Image URL");
+
+    const { error } = await supabase
+        .from("datalabs")
+        .insert([
+            {
+                category,
+                title,
+                description,
+                file_url,
+                cover_image
+            }
+        ]);
+
+    if (error) {
+
+        alert(error.message);
+
+        return;
+
+    }
+
+    await loadDashboard();
+
+});
+
+/*
+=========================================
+ADD EVENT
+=========================================
+*/
+
+document.getElementById("addEvent")?.addEventListener("click", async () => {
+
+    const title = prompt("Event Name");
+
+    if (!title) return;
+
+    const description = prompt("Description");
+
+    const cover_image = prompt("Cover Image URL");
+
+    const { error } = await supabase
+        .from("events")
+        .insert([
+            {
+                title,
+                description,
+                cover_image
+            }
+        ]);
+
+    if (error) {
+
+        alert(error.message);
+
+        return;
+
+    }
+
+    await loadDashboard();
+
+});
+
+/*
+=========================================
+ADD NEWSLETTER
+=========================================
+*/
+
+document.getElementById("addNewsletter")?.addEventListener("click", async () => {
+
+    const title = prompt("Newsletter Title");
+
+    if (!title) return;
+
+    const issue = prompt("Issue Number");
+
+    if (!issue) return;
+
+    const cover_image = prompt("Cover Image URL");
+
+    const pdf_url = prompt("PDF URL");
+
+    const { error } = await supabase
+        .from("newsletters")
+        .insert([
+            {
+                title,
+                issue,
+                cover_image,
+                pdf_url
+            }
+        ]);
+
+    if (error) {
+
+        alert(error.message);
+
+        return;
+
+    }
+
+    await loadDashboard();
+
+});
