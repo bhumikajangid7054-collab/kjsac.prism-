@@ -1,33 +1,82 @@
-// ===========================================
-// PRISM Authentication
-// ===========================================
+/*
+=========================================
+PRISM ADMIN AUTHENTICATION
+=========================================
+*/
 
-// Login user
-async function loginUser(email, password) {
+/*
+=========================================
+LOGIN
+=========================================
+*/
 
-    try {
+async function login(email, password) {
 
-        await login(email, password);
+    const { error } = await supabase.auth.signInWithPassword({
 
-        window.location.href = "dashboard.html";
+        email: email,
 
-    } catch (error) {
+        password: password
+
+    });
+
+    if (error) {
 
         alert(error.message);
 
+        return false;
+
     }
 
-}
+    window.location.href = "dashboard.html";
 
-// Logout user
-async function logoutUser() {
-
-    await logout();
+    return true;
 
 }
 
-// Check if user is logged in
-async function checkLogin() {
+/*
+=========================================
+LOGOUT
+=========================================
+*/
+
+async function logout() {
+
+    await supabase.auth.signOut();
+
+    window.location.href = "login.html";
+
+}
+
+/*
+=========================================
+CURRENT USER
+=========================================
+*/
+
+async function getCurrentUser() {
+
+    const {
+
+        data: {
+
+            user
+
+        }
+
+    } = await supabase.auth.getUser();
+
+    return user;
+
+}
+
+/*
+=========================================
+PROTECT DASHBOARD
+=========================================
+*/
+
+async function protectDashboard() {
 
     const user = await getCurrentUser();
 
@@ -39,18 +88,19 @@ async function checkLogin() {
 
 }
 
-// Show current user email
-async function showUser(id) {
+/*
+=========================================
+REDIRECT IF LOGGED IN
+=========================================
+*/
+
+async function redirectIfLoggedIn() {
 
     const user = await getCurrentUser();
 
-    if (!user) return;
+    if (user) {
 
-    const element = document.getElementById(id);
-
-    if (element) {
-
-        element.innerText = user.email;
+        window.location.href = "dashboard.html";
 
     }
 
