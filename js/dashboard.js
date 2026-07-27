@@ -444,7 +444,43 @@ document.getElementById("addFaculty")?.addEventListener("click", async () => {
 
     if (!designation) return;
 
-    const image_url = prompt("Faculty Image URL");
+    const fileInput = document.createElement("input");
+
+fileInput.type = "file";
+
+fileInput.accept = "image/*";
+
+fileInput.click();
+
+fileInput.onchange = async () => {
+
+    const file = fileInput.files[0];
+
+    if (!file) return;
+
+    const image_url = await uploadFile("faculty", file);
+
+    const { error } = await supabase
+        .from("faculty")
+        .insert([
+            {
+                name,
+                designation,
+                image_url
+            }
+        ]);
+
+    if (error) {
+
+        alert(error.message);
+
+        return;
+
+    }
+
+    await loadDashboard();
+
+};
 
     const { error } = await supabase
         .from("faculty")
@@ -528,7 +564,35 @@ document.getElementById("addEvent")?.addEventListener("click", async () => {
 
     const description = prompt("Description");
 
-    const cover_image = prompt("Cover Image URL");
+    const fileInput = document.createElement("input");
+
+fileInput.type = "file";
+
+fileInput.accept = "image/*";
+
+fileInput.click();
+
+fileInput.onchange = async () => {
+
+    const file = fileInput.files[0];
+
+    if (!file) return;
+
+    const cover_image = await uploadFile("events", file);
+
+    await supabase
+        .from("events")
+        .insert([
+            {
+                title,
+                description,
+                cover_image
+            }
+        ]);
+
+    await loadDashboard();
+
+};
 
     const { error } = await supabase
         .from("events")
