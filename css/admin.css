@@ -1,179 +1,189 @@
-/* ==========================
-   PRISM Admin Panel
-========================== */
-
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap');
+/*
+=========================================
+PRISM ADMIN PANEL
+=========================================
+*/
 
 :root{
-    --primary:#7b1e3a;
-    --primary-dark:#5d162d;
-    --background:#f8f5f0;
-    --card:#ffffff;
+
+    --primary:#6B1F2A;
+
+    --secondary:#F8F5F2;
+
+    --accent:#B8894A;
+
     --text:#222;
-    --muted:#666;
-    --border:#e3ddd5;
-    --radius:16px;
+
+    --white:#ffffff;
+
+    --border:#e6e6e6;
+
     --shadow:0 10px 25px rgba(0,0,0,.08);
+
+    --radius:16px;
+
+    --transition:.3s ease;
+
 }
 
 *{
+
     margin:0;
+
     padding:0;
+
     box-sizing:border-box;
+
 }
 
 body{
+
     font-family:'Inter',sans-serif;
-    background:var(--background);
+
+    background:var(--secondary);
+
     color:var(--text);
-}
 
-h1,h2,h3{
-    font-family:'Cormorant Garamond',serif;
-}
-
-a{
-    text-decoration:none;
-    color:inherit;
-}
-
-.container{
-    width:min(1100px,92%);
-    margin:auto;
-}
-
-/* LOGIN */
-
-.login-wrapper{
     min-height:100vh;
+
     display:flex;
+
     justify-content:center;
+
     align-items:center;
-    padding:40px;
+
+    padding:30px;
+
+}
+
+.login-container{
+
+    width:100%;
+
+    max-width:450px;
+
 }
 
 .login-card{
-    width:420px;
-    background:#fff;
+
+    background:var(--white);
+
+    padding:45px;
+
     border-radius:var(--radius);
+
     box-shadow:var(--shadow);
-    padding:40px;
+
+    text-align:center;
+
 }
 
 .login-card h1{
+
+    font-family:'Cormorant Garamond',serif;
+
+    font-size:3rem;
+
     color:var(--primary);
-    text-align:center;
-    margin-bottom:10px;
+
+    margin-bottom:8px;
+
+}
+
+.login-card h2{
+
+    color:var(--accent);
+
+    margin-bottom:15px;
+
+    font-size:1.2rem;
+
 }
 
 .login-card p{
-    color:var(--muted);
-    text-align:center;
+
+    line-height:1.6;
+
     margin-bottom:30px;
+
+    color:#555;
+
 }
 
-.input-group{
-    margin-bottom:20px;
-}
+form{
 
-.input-group label{
-    display:block;
-    margin-bottom:8px;
-    font-weight:600;
-}
-
-.input-group input{
-    width:100%;
-    padding:14px;
-    border:1px solid var(--border);
-    border-radius:10px;
-    font-size:15px;
-}
-
-.input-group input:focus{
-    outline:none;
-    border-color:var(--primary);
-}
-
-.btn{
-    width:100%;
-    border:none;
-    padding:15px;
-    cursor:pointer;
-    border-radius:10px;
-    background:var(--primary);
-    color:#fff;
-    font-size:16px;
-    font-weight:600;
-    transition:.3s;
-}
-
-.btn:hover{
-    background:var(--primary-dark);
-}
-
-/* DASHBOARD */
-
-.admin-header{
-    background:#fff;
-    box-shadow:0 2px 8px rgba(0,0,0,.05);
-}
-
-.admin-header .container{
     display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:18px 0;
+
+    flex-direction:column;
+
+    gap:18px;
+
 }
 
-.logo{
-    font-size:34px;
-    color:var(--primary);
+input{
+
+    width:100%;
+
+    padding:14px 16px;
+
+    border:1px solid var(--border);
+
+    border-radius:10px;
+
+    font-size:1rem;
+
+    outline:none;
+
+    transition:var(--transition);
+
 }
 
-.logout-btn{
-    padding:10px 20px;
+input:focus{
+
+    border-color:var(--primary);
+
+}
+
+button{
+
     border:none;
-    border-radius:8px;
-    background:var(--primary);
-    color:#fff;
+
     cursor:pointer;
-}
 
-.dashboard{
-    padding:50px 0;
-}
+    padding:15px;
 
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:25px;
-}
+    border-radius:10px;
 
-.card{
-    background:#fff;
-    border-radius:var(--radius);
-    padding:25px;
-    box-shadow:var(--shadow);
-    transition:.3s;
-}
+    background:var(--primary);
 
-.card:hover{
-    transform:translateY(-6px);
-}
+    color:white;
 
-.card h3{
-    color:var(--primary);
-    margin-bottom:12px;
-}
+    font-size:1rem;
 
-.card p{
-    color:var(--muted);
-    margin-bottom:20px;
-}
-
-.card a{
-    display:inline-block;
-    color:var(--primary);
     font-weight:600;
+
+    transition:var(--transition);
+
+}
+
+button:hover{
+
+    background:#4f1720;
+
+}
+
+@media(max-width:600px){
+
+.login-card{
+
+    padding:30px 22px;
+
+}
+
+.login-card h1{
+
+    font-size:2.4rem;
+
+}
+
 }
