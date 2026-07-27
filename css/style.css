@@ -1,34 +1,44 @@
-/* ===========================================
-   PRISM Design System
+/* ======================================================
+   PRISM WEBSITE
    Department of Political Science
-   =========================================== */
+   K. J. Somaiya College of Arts & Commerce (Autonomous)
+   Reaccredited by NAAC with Grade 'A'
+====================================================== */
 
-/* ---------- Root Variables ---------- */
+
+/* ======================================================
+   ROOT VARIABLES
+====================================================== */
 
 :root{
 
     --primary:#6B1E2B;
-    --primary-dark:#541520;
+    --primary-dark:#4D1420;
+    --accent:#C8A96A;
 
-    --background:#F8F6F1;
+    --background:#F8F6F2;
     --surface:#FFFFFF;
 
-    --text:#2B2B2B;
+    --text:#222222;
     --text-light:#666666;
 
-    --border:#E6E1D8;
+    --border:#E8E3DA;
 
-    --shadow:0 10px 30px rgba(0,0,0,.08);
+    --shadow:0 12px 35px rgba(0,0,0,.08);
+    --shadow-hover:0 18px 45px rgba(0,0,0,.12);
 
     --radius:18px;
 
-    --transition:.3s ease;
+    --transition:.35s ease;
 
     --max-width:1200px;
 
 }
 
-/* ---------- Reset ---------- */
+
+/* ======================================================
+   RESET
+====================================================== */
 
 *{
     margin:0;
@@ -42,11 +52,11 @@ html{
 
 body{
 
+    font-family:'Inter',sans-serif;
+
     background:var(--background);
 
     color:var(--text);
-
-    font-family:'Inter',sans-serif;
 
     line-height:1.8;
 
@@ -54,9 +64,36 @@ body{
 
 }
 
-/* ---------- Typography ---------- */
+img{
 
-h1,h2,h3,h4{
+    max-width:100%;
+    display:block;
+
+}
+
+a{
+
+    text-decoration:none;
+
+    color:inherit;
+
+}
+
+ul{
+
+    list-style:none;
+
+}
+
+
+/* ======================================================
+   TYPOGRAPHY
+====================================================== */
+
+h1,
+h2,
+h3,
+h4{
 
     font-family:'Cormorant Garamond',serif;
 
@@ -67,12 +104,25 @@ h1,h2,h3,h4{
 }
 
 h1{
-    font-size:4rem;
+
+    font-size:4.5rem;
+
+    line-height:1.1;
+
 }
 
 h2{
-    font-size:2.6rem;
-    margin-bottom:25px;
+
+    font-size:2.7rem;
+
+    margin-bottom:20px;
+
+}
+
+h3{
+
+    font-size:1.8rem;
+
 }
 
 p{
@@ -83,79 +133,456 @@ p{
 
 }
 
-/* ---------- Images ---------- */
 
-img{
-    max-width:100%;
-    display:block;
-}
-
-/* ---------- Links ---------- */
-
-a{
-    text-decoration:none;
-    color:inherit;
-}
-
-/* ---------- Lists ---------- */
-
-ul{
-    list-style:none;
-}
-
-/* ---------- Universal Container ---------- */
+/* ======================================================
+   LAYOUT
+====================================================== */
 
 .container{
 
-    width:min(var(--max-width),92%);
+    width:90%;
 
-    margin-inline:auto;
+    max-width:var(--max-width);
+
+    margin:auto;
 
 }
-
-/* ---------- Sections ---------- */
 
 section{
 
-    padding:100px 0;
+    padding:90px 0;
 
 }
-
-/* ---------- Section Headings ---------- */
 
 .section-title{
 
     text-align:center;
 
+    margin-bottom:60px;
+
+}
+
+.section-title p{
+
+    max-width:700px;
+
+    margin:15px auto 0;
+
+}
+
+
+/* ======================================================
+   HEADER
+====================================================== */
+
+.header{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+    background:rgba(255,255,255,.88);
+
+    backdrop-filter:blur(18px);
+
+    border-bottom:1px solid var(--border);
+
+}
+
+
+/* ======================================================
+   NAVBAR
+====================================================== */
+
+.navbar{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:18px 0;
+
+}
+
+.logo{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.logo h1{
+
+    font-size:2rem;
+
+    color:var(--primary);
+
+    letter-spacing:2px;
+
+}
+
+.logo span{
+
+    margin-top:5px;
+
+    font-size:.80rem;
+
+    line-height:1.5;
+
+    color:var(--text-light);
+
+}
+
+.nav-links{
+
+    display:flex;
+
+    gap:35px;
+
+    align-items:center;
+
+}
+
+.nav-links a{
+
+    font-weight:600;
+
+    position:relative;
+
+    transition:var(--transition);
+
+}
+
+.nav-links a:hover{
+
+    color:var(--primary);
+
+}
+
+.nav-links a.active{
+
+    color:var(--primary);
+
+}
+
+.nav-links a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    bottom:-8px;
+
+    width:0;
+
+    height:2px;
+
+    background:var(--primary);
+
+    transition:var(--transition);
+
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after{
+
+    width:100%;
+
+}
+
+.menu-toggle{
+
+    display:none;
+
+    background:none;
+
+    border:none;
+
+    font-size:1.5rem;
+
+    cursor:pointer;
+
+    color:var(--primary);
+
+}
+
+
+/* ======================================================
+   HERO
+====================================================== */
+
+.hero{
+
+    min-height:85vh;
+
+    display:flex;
+
+    align-items:center;
+
+    text-align:center;
+
+}
+
+.hero-content{
+
+    max-width:900px;
+
+    margin:auto;
+
+}
+
+.hero-tag{
+
+    color:var(--accent);
+
+    text-transform:uppercase;
+
+    letter-spacing:3px;
+
+    font-size:.95rem;
+
+    font-weight:600;
+
     margin-bottom:20px;
 
 }
 
-.section-description{
+.hero h1{
 
-    max-width:950px;
-
-    margin:0 auto;
-
-    text-align:justify;
-
-    line-height:1.9;
-
-    font-size:1.08rem;
+    margin-bottom:15px;
 
 }
 
-/* ---------- Buttons ---------- */
+.hero h2{
 
-.btn{
+    color:var(--text);
 
-    display:inline-block;
+    font-size:2rem;
+
+    font-weight:500;
+
+    margin-bottom:30px;
+
+}
+
+.hero-college{
+
+    font-size:1.05rem;
+
+    line-height:1.9;
+
+    color:var(--text-light);
+
+}
+
+
+/* ======================================================
+   COMMON CARDS
+====================================================== */
+
+.about-card,
+.platform-card{
+
+    background:var(--surface);
+
+    border-radius:var(--radius);
+
+    padding:35px;
+
+    border:1px solid var(--border);
+
+    box-shadow:var(--shadow);
+
+    transition:var(--transition);
+
+}
+
+.about-card:hover,
+.platform-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:var(--shadow-hover);
+
+}
+/* ======================================================
+   ABOUT PRISM
+====================================================== */
+
+.about-prism{
+
+    background:var(--background);
+
+}
+
+.about-card{
+
+    max-width:900px;
+
+    margin:0 auto;
+
+}
+
+.about-card p{
+
+    margin-bottom:20px;
+
+    text-align:justify;
+
+}
+
+.about-card p:last-child{
+
+    margin-bottom:0;
+
+}
+
+.about-card strong{
+
+    color:var(--primary);
+
+    font-size:1.15rem;
+
+}
+
+
+/* ======================================================
+   OUR PLATFORMS
+====================================================== */
+
+.platforms{
+
+    background:#FDFCF9;
+
+}
+
+.platform-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+
+    gap:30px;
+
+    margin-top:50px;
+
+}
+
+.platform-card{
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+
+    min-height:320px;
+
+    text-align:left;
+
+    color:inherit;
+
+    overflow:hidden;
+
+    position:relative;
+
+}
+
+.platform-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:5px;
 
     background:var(--primary);
 
-    color:#fff;
+    transform:scaleX(0);
 
-    padding:14px 34px;
+    transform-origin:left;
+
+    transition:var(--transition);
+
+}
+
+.platform-card:hover::before{
+
+    transform:scaleX(1);
+
+}
+
+.platform-card i{
+
+    font-size:2.4rem;
+
+    color:var(--primary);
+
+    margin-bottom:25px;
+
+}
+
+.platform-card h3{
+
+    margin-bottom:15px;
+
+}
+
+.platform-card p{
+
+    margin-bottom:35px;
+
+    flex-grow:1;
+
+}
+
+.platform-card span{
+
+    font-weight:600;
+
+    color:var(--primary);
+
+    transition:var(--transition);
+
+}
+
+.platform-card:hover span{
+
+    letter-spacing:1px;
+
+}
+
+
+/* ======================================================
+   BUTTONS
+====================================================== */
+
+.card-btn,
+.primary-btn,
+.secondary-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    padding:14px 30px;
 
     border-radius:50px;
 
@@ -163,21 +590,579 @@ section{
 
     transition:var(--transition);
 
+    cursor:pointer;
+
 }
 
-.btn:hover{
+.primary-btn{
+
+    background:var(--primary);
+
+    color:#fff;
+
+    border:2px solid var(--primary);
+
+}
+
+.primary-btn:hover{
 
     background:var(--primary-dark);
 
-    transform:translateY(-3px);
+    border-color:var(--primary-dark);
 
 }
 
-/* ---------- Cards ---------- */
+.secondary-btn{
 
-.card{
+    background:#fff;
+
+    color:var(--primary);
+
+    border:2px solid var(--primary);
+
+}
+
+.secondary-btn:hover{
+
+    background:var(--primary);
+
+    color:#fff;
+
+}
+
+.card-btn{
+
+    background:var(--primary);
+
+    color:#fff;
+
+    width:max-content;
+
+}
+
+.card-btn:hover{
+
+    background:var(--primary-dark);
+
+}
+
+
+/* ======================================================
+   LINKS
+====================================================== */
+
+a{
+
+    transition:var(--transition);
+
+}
+
+a:hover{
+
+    color:var(--primary);
+
+}
+
+
+/* ======================================================
+   ICON STYLES
+====================================================== */
+
+.platform-icon{
+
+    width:70px;
+
+    height:70px;
+
+    border-radius:18px;
+
+    background:rgba(107,30,43,.08);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    margin-bottom:25px;
+
+}
+
+.platform-icon i{
+
+    margin:0;
+
+}
+
+
+/* ======================================================
+   SIMPLE ANIMATIONS
+====================================================== */
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+.hero-content,
+.about-card,
+.platform-card{
+
+    animation:fadeUp .8s ease both;
+
+}
+
+
+/* ======================================================
+   CUSTOM SCROLLBAR
+====================================================== */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#EFEAE2;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:var(--primary);
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:var(--primary-dark);
+
+}
+/* ======================================================
+   DEPARTMENT PAGE
+====================================================== */
+
+.department-header{
+
+    background:linear-gradient(135deg,#6B1E2B,#4D1420);
+
+    color:#fff;
+
+    text-align:center;
+
+    padding:110px 0;
+
+}
+
+.department-header h1{
+
+    color:#fff;
+
+    font-size:4rem;
+
+    margin-bottom:15px;
+
+}
+
+.department-header h2{
+
+    color:#F4E9DA;
+
+    font-size:2rem;
+
+    font-weight:500;
+
+    margin-bottom:25px;
+
+}
+
+.department-header p{
+
+    color:#F8F6F2;
+
+    font-size:1.05rem;
+
+    line-height:1.8;
+
+}
+
+.department-divider{
+
+    width:140px;
+
+    height:4px;
+
+    background:var(--accent);
+
+    margin:35px auto 0;
+
+    border-radius:20px;
+
+}
+
+
+/* ======================================================
+   CONTENT SECTIONS
+====================================================== */
+
+.department-section{
+
+    padding:90px 0;
+
+}
+
+.department-content{
+
+    max-width:950px;
+
+    margin:0 auto;
+
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius);
+
+    padding:45px;
+
+    box-shadow:var(--shadow);
+
+}
+
+.department-content p{
+
+    text-align:justify;
+
+    margin-bottom:22px;
+
+}
+
+.department-content p:last-child{
+
+    margin-bottom:0;
+
+}
+
+
+/* ======================================================
+   TEAM SECTION
+====================================================== */
+
+.team-section{
+
+    background:#FDFCF9;
+
+}
+
+.team-title{
+
+    text-align:center;
+
+    margin-bottom:60px;
+
+}
+
+.team-title h2{
+
+    margin-bottom:15px;
+
+}
+
+
+/* ======================================================
+   TEAM GRID
+====================================================== */
+
+.team-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+
+    gap:35px;
+
+}
+
+
+/* ======================================================
+   MEMBER CARD
+====================================================== */
+
+.member-card{
+
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius);
+
+    padding:35px;
+
+    text-align:center;
+
+    transition:var(--transition);
+
+    box-shadow:var(--shadow);
+
+}
+
+.member-card:hover{
+
+    transform:translateY(-10px);
+
+    box-shadow:var(--shadow-hover);
+
+}
+
+.member-avatar{
+
+    width:95px;
+
+    height:95px;
+
+    margin:0 auto 25px;
+
+    border-radius:50%;
+
+    background:rgba(107,30,43,.10);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+.member-avatar i{
+
+    font-size:2.6rem;
+
+    color:var(--primary);
+
+}
+
+.member-card h3{
+
+    margin-bottom:8px;
+
+}
+
+.member-card h4{
+
+    font-family:'Inter',sans-serif;
+
+    font-size:1rem;
+
+    color:var(--accent);
+
+    font-weight:600;
+
+    margin-bottom:15px;
+
+}
+
+.member-card p{
+
+    font-size:.95rem;
+
+}
+
+
+/* ======================================================
+   FACULTY & STUDENT COUNCIL
+====================================================== */
+
+.team-category{
+
+    margin-bottom:70px;
+
+}
+
+.team-category:last-child{
+
+    margin-bottom:0;
+
+}
+
+.team-category h2{
+
+    text-align:center;
+
+    margin-bottom:40px;
+
+}
+
+
+/* ======================================================
+   SECTION SPACING
+====================================================== */
+
+.about-department{
+
+    background:var(--background);
+
+}
+
+.about-psa{
+
+    background:#FDFCF9;
+
+}
+
+
+/* ======================================================
+   HOVER EFFECTS
+====================================================== */
+
+.department-content:hover{
+
+    box-shadow:var(--shadow-hover);
+
+    transition:var(--transition);
+
+}
+
+.member-avatar{
+
+    transition:var(--transition);
+
+}
+
+.member-card:hover .member-avatar{
+
+    transform:scale(1.08);
+
+    background:rgba(107,30,43,.15);
+
+}
+
+
+/* ======================================================
+   RESPONSIVE
+====================================================== */
+
+@media (max-width:768px){
+
+    .department-header{
+
+        padding:80px 0;
+
+    }
+
+    .department-header h1{
+
+        font-size:2.8rem;
+
+    }
+
+    .department-header h2{
+
+        font-size:1.6rem;
+
+    }
+
+    .department-content{
+
+        padding:30px;
+
+    }
+
+    .team-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+/* ======================================================
+   DATALABS PAGE
+====================================================== */
+
+.datalabs{
+
+    background:var(--background);
+
+}
+
+.datalabs-intro{
+
+    max-width:900px;
+
+    margin:0 auto 70px;
+
+    padding:40px;
 
     background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius);
+
+    box-shadow:var(--shadow);
+
+}
+
+.datalabs-intro p{
+
+    text-align:justify;
+
+}
+
+.domain-section{
+
+    margin-bottom:80px;
+
+}
+
+.domain-section:last-child{
+
+    margin-bottom:0;
+
+}
+
+.domain-title{
+
+    text-align:center;
+
+    margin-bottom:40px;
+
+}
+
+.domain-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+
+    gap:30px;
+
+}
+
+.domain-card{
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
 
     border-radius:var(--radius);
 
@@ -189,471 +1174,648 @@ section{
 
 }
 
-.card:hover{
+.domain-card:hover{
 
     transform:translateY(-8px);
 
-}
-
-/* ---------- Utility ---------- */
-
-.text-center{
-    text-align:center;
-}
-
-.mb-2{
-    margin-bottom:20px;
-}
-
-.mb-3{
-    margin-bottom:30px;
-}
-
-.mb-4{
-    margin-bottom:40px;
-}
-
-/* ===========================
-HEADER
-=========================== */
-
-.header{
-
-position:sticky;
-
-top:0;
-
-z-index:1000;
-
-background:rgba(248,246,241,.92);
-
-backdrop-filter:blur(14px);
-
-border-bottom:1px solid var(--border);
+    box-shadow:var(--shadow-hover);
 
 }
 
-.navbar{
+.domain-card h3{
 
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-padding:18px 0;
+    margin-bottom:15px;
 
 }
 
-.logo{
+.domain-card p{
 
-display:flex;
-
-align-items:center;
-
-gap:18px;
+    margin-bottom:25px;
 
 }
 
-.logo img{
+.domain-card .card-btn{
 
-width:65px;
-
-height:65px;
-
-object-fit:contain;
+    margin-top:auto;
 
 }
 
-.logo-text h2{
 
-font-size:2rem;
+/* ======================================================
+   Y.U.V.A. PAGE
+====================================================== */
 
-margin:0;
+.yuva{
 
-line-height:1;
-
-}
-
-.logo-text p{
-
-font-size:.85rem;
-
-color:var(--text-light);
-
-max-width:260px;
-
-line-height:1.4;
-
-margin-top:6px;
-
-}
-.logo-text p{
-
-font-size:.85rem;
-
-color:var(--text-light);
-
-max-width:260px;
-
-line-height:1.4;
-
-margin-top:6px;
+    background:#FDFCF9;
 
 }
 
-.nav-menu{
+.yuva-intro{
 
-display:flex;
+    max-width:900px;
 
-gap:35px;
+    margin:0 auto 60px;
 
-align-items:center;
+    background:#fff;
 
-}
+    border:1px solid var(--border);
 
-.nav-menu a{
+    border-radius:var(--radius);
 
-font-weight:600;
+    padding:40px;
 
-transition:.3s;
-
-position:relative;
+    box-shadow:var(--shadow);
 
 }
 
-.nav-menu a:hover{
+.yuva-intro p{
 
-color:var(--primary);
-
-}
-
-.nav-menu a.active{
-
-color:var(--primary);
+    text-align:justify;
 
 }
 
-.nav-menu a.active::after{
+.newsletter-grid{
 
-content:"";
+    display:grid;
 
-position:absolute;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
 
-left:0;
-
-bottom:-8px;
-
-width:100%;
-
-height:2px;
-
-background:var(--primary);
+    gap:35px;
 
 }
 
-/* ===========================
-HERO
-=========================== */
+.newsletter-card{
 
-.hero{
+    background:#fff;
 
-min-height:85vh;
+    border:1px solid var(--border);
 
-display:flex;
+    border-radius:var(--radius);
 
-align-items:center;
+    overflow:hidden;
 
-justify-content:center;
+    box-shadow:var(--shadow);
 
-text-align:center;
+    transition:var(--transition);
 
 }
 
-.hero-content{
+.newsletter-card:hover{
 
-max-width:850px;
+    transform:translateY(-10px);
 
-margin:auto;
-
-}
-
-.department{
-
-letter-spacing:4px;
-
-text-transform:uppercase;
-
-font-size:.9rem;
-
-font-weight:600;
-
-color:var(--primary);
-
-margin-bottom:20px;
+    box-shadow:var(--shadow-hover);
 
 }
 
-.hero h1{
+.newsletter-cover{
 
-font-size:6rem;
+    height:320px;
 
-margin-bottom:15px;
+    background:#EFEAE2;
 
-}
+    display:flex;
 
-.hero h3{
+    align-items:center;
 
-font-size:2rem;
+    justify-content:center;
 
-font-family:'Cormorant Garamond',serif;
+    color:var(--primary);
 
-font-weight:600;
-
-color:var(--text);
-
-margin-bottom:18px;
+    font-size:3rem;
 
 }
 
-.college{
+.newsletter-content{
 
-font-size:1.15rem;
-
-font-weight:500;
-
-margin-bottom:30px;
+    padding:30px;
 
 }
 
-.hero-text{
+.newsletter-content h3{
 
-max-width:720px;
-
-margin:0 auto 45px;
-
-font-size:1.08rem;
+    margin-bottom:12px;
 
 }
 
-/* ===========================
-RESPONSIVE
-=========================== */
+.newsletter-meta{
 
-@media(max-width:900px){
+    margin-bottom:25px;
 
-.navbar{
+    color:var(--text-light);
 
-flex-direction:column;
+    font-size:.95rem;
 
-gap:25px;
+    line-height:1.8;
 
 }
 
-.nav-menu{
+.newsletter-actions{
 
-flex-wrap:wrap;
+    display:flex;
 
-justify-content:center;
+    gap:15px;
 
-gap:18px;
-
-}
-
-.hero h1{
-
-font-size:4rem;
+    flex-wrap:wrap;
 
 }
 
-.hero h3{
 
-font-size:1.6rem;
+/* ======================================================
+   EVENTS PAGE
+====================================================== */
 
-}
+.events{
 
-.logo{
-
-flex-direction:column;
-
-text-align:center;
+    background:var(--background);
 
 }
 
-.logo-text p{
+.events-grid{
 
-max-width:100%;
+    display:grid;
 
-}
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
 
-}
-
-/* ===========================
-GRID LAYOUT
-=========================== */
-
-.cards-grid{
-
-display:grid;
-
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-
-gap:30px;
-
-margin:50px 0;
+    gap:35px;
 
 }
 
-.cards-grid .card{
+.event-card{
 
-text-align:center;
+    background:#fff;
 
-}
+    border:1px solid var(--border);
 
-.cards-grid h3{
+    border-radius:var(--radius);
 
-margin-bottom:15px;
+    overflow:hidden;
 
-font-size:2rem;
+    box-shadow:var(--shadow);
 
-}
-
-.cards-grid p{
-
-font-size:1rem;
+    transition:var(--transition);
 
 }
 
-#about-prism,
-#datalabs,
-#yuva,
-#events,
-#about-preview{
+.event-card:hover{
 
-padding:110px 0;
+    transform:translateY(-10px);
+
+    box-shadow:var(--shadow-hover);
 
 }
-/* ===========================
-FOOTER
-=========================== */
+
+.event-image{
+
+    height:220px;
+
+    background:#E9E4DB;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:3rem;
+
+    color:var(--primary);
+
+}
+
+.event-content{
+
+    padding:30px;
+
+}
+
+.event-content h3{
+
+    margin-bottom:15px;
+
+}
+
+.event-content p{
+
+    margin-bottom:25px;
+
+}
+
+.gallery-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:12px 26px;
+
+    background:var(--primary);
+
+    color:#fff;
+
+    border-radius:40px;
+
+    font-weight:600;
+
+    transition:var(--transition);
+
+}
+
+.gallery-btn:hover{
+
+    background:var(--primary-dark);
+
+}
+
+
+/* ======================================================
+   COMMON PAGE ANIMATIONS
+====================================================== */
+
+.domain-card,
+.newsletter-card,
+.event-card{
+
+    animation:fadeUp .8s ease both;
+
+}
+/* ======================================================
+   FOOTER
+====================================================== */
 
 .footer{
 
-background:#2b2b2b;
+    background:var(--primary);
 
-color:#ffffff;
+    color:#fff;
 
-padding:70px 0 25px;
+    padding:70px 0 25px;
 
-margin-top:100px;
+    margin-top:80px;
 
 }
 
 .footer-grid{
 
-display:grid;
+    display:grid;
 
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
 
-gap:50px;
+    gap:45px;
 
-}
-
-.footer h3{
-
-color:#ffffff;
-
-margin-bottom:18px;
-
-font-size:2rem;
+    margin-bottom:50px;
 
 }
 
-.footer p{
+.footer-column h3{
 
-color:#dddddd;
+    color:#fff;
 
-margin-bottom:12px;
+    margin-bottom:20px;
 
-line-height:1.8;
-
-}
-
-.footer a{
-
-color:#dddddd;
-
-transition:.3s;
+    font-size:1.7rem;
 
 }
 
-.footer a:hover{
+.footer-column p{
 
-color:#ffffff;
+    color:rgba(255,255,255,.82);
+
+    margin-bottom:12px;
+
+    line-height:1.8;
 
 }
+
+.footer-column ul{
+
+    padding:0;
+
+}
+
+.footer-column ul li{
+
+    margin-bottom:14px;
+
+}
+
+.footer-column ul li a{
+
+    color:rgba(255,255,255,.82);
+
+    transition:var(--transition);
+
+}
+
+.footer-column ul li a:hover{
+
+    color:#fff;
+
+    padding-left:8px;
+
+}
+
+
+/* ======================================================
+   SOCIAL BUTTONS
+====================================================== */
+
+.social-links{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:15px;
+
+}
+
+.social-btn{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:14px 18px;
+
+    border-radius:50px;
+
+    background:rgba(255,255,255,.08);
+
+    color:#fff;
+
+    border:1px solid rgba(255,255,255,.15);
+
+    transition:var(--transition);
+
+}
+
+.social-btn i{
+
+    width:24px;
+
+    text-align:center;
+
+    font-size:1.1rem;
+
+}
+
+.social-btn:hover{
+
+    background:#fff;
+
+    color:var(--primary);
+
+    transform:translateX(8px);
+
+}
+
+
+/* ======================================================
+   FOOTER BOTTOM
+====================================================== */
 
 .footer-bottom{
 
-margin-top:50px;
+    border-top:1px solid rgba(255,255,255,.18);
 
-padding-top:20px;
+    padding-top:25px;
 
-border-top:1px solid rgba(255,255,255,.15);
-
-text-align:center;
+    text-align:center;
 
 }
 
 .footer-bottom p{
 
-margin:0;
+    color:rgba(255,255,255,.72);
 
-color:#cccccc;
+    font-size:.92rem;
 
-font-size:.95rem;
-
-}
-
-/* ===========================
-OUR TEAM
-=========================== */
-
-#team .card,
-.cards-grid .card{
-
-text-align:center;
+    margin-bottom:8px;
 
 }
 
-.cards-grid .card img{
 
-width:170px;
+/* ======================================================
+   UTILITIES
+====================================================== */
 
-height:170px;
+.text-center{
 
-border-radius:50%;
-
-object-fit:cover;
-
-margin:0 auto 25px;
-
-border:5px solid #ffffff;
-
-box-shadow:0 8px 20px rgba(0,0,0,.12);
+    text-align:center;
 
 }
 
-.cards-grid .card h3{
+.mt-1{margin-top:10px;}
+.mt-2{margin-top:20px;}
+.mt-3{margin-top:30px;}
+.mt-4{margin-top:40px;}
+.mt-5{margin-top:50px;}
 
-margin-bottom:10px;
+.mb-1{margin-bottom:10px;}
+.mb-2{margin-bottom:20px;}
+.mb-3{margin-bottom:30px;}
+.mb-4{margin-bottom:40px;}
+.mb-5{margin-bottom:50px;}
 
-font-size:1.8rem;
+
+/* ======================================================
+   RESPONSIVE DESIGN
+====================================================== */
+
+@media (max-width:992px){
+
+    h1{
+
+        font-size:3.5rem;
+
+    }
+
+    h2{
+
+        font-size:2.3rem;
+
+    }
+
+    .hero{
+
+        min-height:70vh;
+
+    }
 
 }
 
-.cards-grid .card p{
 
-margin-bottom:8px;
+@media (max-width:768px){
+
+    .navbar{
+
+        flex-wrap:wrap;
+
+        gap:20px;
+
+    }
+
+    .menu-toggle{
+
+        display:block;
+
+        margin-left:auto;
+
+    }
+
+    .nav-links{
+
+        display:none;
+
+        width:100%;
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:18px;
+
+        padding-top:20px;
+
+    }
+
+    .nav-links.active{
+
+        display:flex;
+
+    }
+
+    h1{
+
+        font-size:2.8rem;
+
+    }
+
+    h2{
+
+        font-size:2rem;
+
+    }
+
+    .hero h2{
+
+        font-size:1.5rem;
+
+    }
+
+    section{
+
+        padding:70px 0;
+
+    }
+
+    .about-card,
+    .department-content,
+    .datalabs-intro,
+    .yuva-intro{
+
+        padding:28px;
+
+    }
+
+    .platform-grid,
+    .team-grid,
+    .domain-grid,
+    .newsletter-grid,
+    .events-grid,
+    .footer-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .newsletter-actions{
+
+        flex-direction:column;
+
+    }
+
+    .card-btn,
+    .gallery-btn,
+    .primary-btn,
+    .secondary-btn{
+
+        width:100%;
+
+        justify-content:center;
+
+    }
 
 }
+
+
+@media (max-width:480px){
+
+    .container{
+
+        width:92%;
+
+    }
+
+    h1{
+
+        font-size:2.3rem;
+
+    }
+
+    h2{
+
+        font-size:1.7rem;
+
+    }
+
+    .logo h1{
+
+        font-size:1.6rem;
+
+    }
+
+    .logo span{
+
+        font-size:.72rem;
+
+    }
+
+    .hero-tag{
+
+        font-size:.80rem;
+
+        letter-spacing:2px;
+
+    }
+
+    .hero-college{
+
+        font-size:.95rem;
+
+    }
+
+    .footer{
+
+        text-align:center;
+
+    }
+
+    .social-btn{
+
+        justify-content:center;
+
+    }
+
+}
+
+
+/* ======================================================
+   END OF STYLESHEET
+====================================================== */
