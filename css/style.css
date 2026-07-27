@@ -216,25 +216,47 @@ section{
 
 }
 
-.logo h1{
+.logo{
 
-    font-size:2rem;
+    display:flex;
 
-    color:var(--primary);
+    align-items:center;
 
-    letter-spacing:2px;
+    gap:15px;
+
+    text-decoration:none;
 
 }
 
-.logo span{
+.logo-image{
 
-    margin-top:5px;
+    width:70px;
 
-    font-size:.80rem;
+    height:70px;
 
-    line-height:1.5;
+    object-fit:contain;
 
-    color:var(--text-light);
+    flex-shrink:0;
+
+}
+
+.logo-text{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.logo-text h1{
+
+    margin:0;
+
+}
+
+.logo-text span{
+
+    line-height:1.35;
 
 }
 
