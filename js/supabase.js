@@ -166,3 +166,37 @@ async function getEventGallery(eventId) {
     return data;
 
 }
+
+/*
+=========================================
+STORAGE UPLOAD
+=========================================
+*/
+
+async function uploadFile(bucket, file) {
+
+    const fileName = Date.now() + "_" + file.name;
+
+    const { error } = await supabase.storage
+        .from(bucket)
+        .upload(fileName, file);
+
+    if (error) {
+
+        console.error(error);
+
+        return null;
+
+    }
+
+    const {
+
+        data
+
+    } = supabase.storage
+        .from(bucket)
+        .getPublicUrl(fileName);
+
+    return data.publicUrl;
+
+}
