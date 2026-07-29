@@ -73,28 +73,6 @@
 
     <script src="../js/auth.js" defer></script>
 
-    <script>
-
-        redirectIfLoggedIn();
-
-        document
-            .getElementById("loginForm")
-            .addEventListener("submit", async function (e) {
-
-                e.preventDefault();
-
-                await login(
-
-                    document.getElementById("email").value,
-
-                    document.getElementById("password").value
-
-                );
-
-            });
-
-    </script>
-
 </body>
 
 </html>
