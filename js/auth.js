@@ -1,80 +1,73 @@
-/*
-=========================================
-PRISM ADMIN AUTHENTICATION
-=========================================
-*/
+// ==========================================
+// ADMIN AUTH
+// ==========================================
 
-/*
-=========================================
-LOGIN
-=========================================
-*/
+document.addEventListener("DOMContentLoaded", () => {
 
-async function login(email, password) {
-
-    const { error } = await supabase.auth.signInWithPassword({
-
-        email: email,
-
-        password: password
-
-    });
-
-    if (error) {
-
-        alert(error.message);
-
-        return false;
-
+    // Login Page
+    if (document.getElementById("loginForm")) {
+        initializeLogin();
     }
 
-    window.location.href = "dashboard.html";
+    // Dashboard
+    if (document.body.dataset.page === "dashboard") {
+        protectDashboard();
+        setupLogout();
+    }
 
-    return true;
+});
 
-}
+// ==========================================
+// LOGIN
+// ==========================================
 
-/*
-=========================================
-LOGOUT
-=========================================
-*/
+function initializeLogin() {
 
-async function logout() {
+    const form = document.getElementById("loginForm");
 
-    await supabase.auth.signOut();
+    form.addEventListener("submit", async (e) => {
 
-    window.location.href = "login.html";
+        e.preventDefault();
 
-}
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
 
-/*
-=========================================
-CURRENT USER
-=========================================
-*/
+        try {
 
-async function getCurrentUser() {
+            showLoader();
 
-    const {
+            const { error } = await supabase.auth.signInWithPassword({
+                email,
+                password
+            });
 
-        data: {
+            if (error) throw error;
 
-            user
+            showToast("Login successful");
+
+            setTimeout(() => {
+                window.location.href = "dashboard.html";
+            }, 700);
+
+        } catch (err) {
+
+            console.error(err);
+
+            showToast(err.message, "error");
+
+        } finally {
+
+            hideLoader();
 
         }
 
-    } = await supabase.auth.getUser();
-
-    return user;
+    });
 
 }
 
-/*
-=========================================
-PROTECT DASHBOARD
-=========================================
-*/
+// ==========================================
+// SESSION CHECK
+// ==========================================
 
 async function protectDashboard() {
 
@@ -84,24 +77,28 @@ async function protectDashboard() {
 
         window.location.href = "login.html";
 
+        return;
+
     }
 
 }
 
-/*
-=========================================
-REDIRECT IF LOGGED IN
-=========================================
-*/
+// ==========================================
+// LOGOUT
+// ==========================================
 
-async function redirectIfLoggedIn() {
+function setupLogout() {
 
-    const user = await getCurrentUser();
+    const btn = document.getElementById("logoutBtn");
 
-    if (user) {
+    if (!btn) return;
 
-        window.location.href = "dashboard.html";
+    btn.addEventListener("click", async () => {
 
-    }
+        await signOut();
+
+        window.location.href = "login.html";
+
+    });
 
 }
