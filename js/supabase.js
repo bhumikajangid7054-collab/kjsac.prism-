@@ -19,31 +19,6 @@ const supabase = window.supabase.createClient(
 
 /*
 =========================================
-ANNOUNCEMENTS
-=========================================
-*/
-
-async function getAnnouncements() {
-
-    const { data, error } = await supabase
-        .from("announcements")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-    if (error) {
-
-        console.error(error);
-
-        return [];
-
-    }
-
-    return data;
-
-}
-
-/*
-=========================================
 FACULTY
 =========================================
 */
