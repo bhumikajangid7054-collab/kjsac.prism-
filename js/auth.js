@@ -34,24 +34,24 @@ alert("Login button clicked");
         const email = document.getElementById("email").value.trim();
         const password = document.getElementById("password").value;
 
-        try {
+try {
 
-            showLoader();
+    showLoader();
 
-            const { error } = await supabase.auth.signInWithPassword({
-                email,
-                password
-            });
+    const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password
+    });
 
-            if (error) throw error;
+    if (error) throw error;
 
-            showToast("Login successful");
+    showToast("Login successful");
 
-            setTimeout(() => {
-                window.location.href = "dashboard.html";
-            }, 700);
+    setTimeout(() => {
+        window.location.href = "dashboard.html";
+    }, 700);
 
-     catch (err) {
+} catch (err) {
 
     console.error(err);
 
@@ -59,9 +59,9 @@ alert("Login button clicked");
 
 } finally {
 
-            hideLoader();
+    hideLoader();
 
-        }
+}
 
     });
 
