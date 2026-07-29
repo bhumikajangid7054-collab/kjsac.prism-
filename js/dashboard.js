@@ -4,18 +4,22 @@ PRISM ADMIN DASHBOARD
 =========================================
 */
 
+document.addEventListener("DOMContentLoaded", () => {
+    loadDashboard();
+});
+
+/*
+=========================================
+DASHBOARD
+=========================================
+*/
+
 async function loadDashboard() {
-
     await loadStatistics();
-
     await loadFaculty();
-
     await loadDataLabs();
-
     await loadEvents();
-
     await loadNewsletters();
-
 }
 
 /*
@@ -23,20 +27,23 @@ async function loadDashboard() {
 STATISTICS
 =========================================
 */
+
 async function loadStatistics() {
 
-    document.getElementById("facultyCount").textContent =
-        (await getFaculty()).length;
+    const faculty = await getFaculty();
+    const datalabs = await getDataLabs();
+    const events = await getEvents();
+    const newsletters = await getNewsletters();
 
-    document.getElementById("datalabCount").textContent =
-        (await getDataLabs()).length;
+    const facultyCount = document.getElementById("facultyCount");
+    const datalabCount = document.getElementById("datalabCount");
+    const eventCount = document.getElementById("eventCount");
+    const newsletterCount = document.getElementById("newsletterCount");
 
-    document.getElementById("eventCount").textContent =
-        (await getEvents()).length;
-
-    document.getElementById("newsletterCount").textContent =
-        (await getNewsletters()).length;
-
+    if (facultyCount) facultyCount.textContent = faculty.length;
+    if (datalabCount) datalabCount.textContent = datalabs.length;
+    if (eventCount) eventCount.textContent = events.length;
+    if (newsletterCount) newsletterCount.textContent = newsletters.length;
 }
 
 /*
@@ -47,17 +54,23 @@ FACULTY
 
 async function loadFaculty() {
 
-    const faculty = await getFaculty();
-
     const container = document.getElementById("facultyList");
 
+    if (!container) return;
+
     container.innerHTML = "";
+
+    const faculty = await getFaculty();
 
     faculty.forEach(member => {
 
         container.innerHTML += `
-
         <div class="admin-card">
+
+            <img
+                src="${member.image_url || ""}"
+                alt="${member.name}"
+                class="faculty-preview">
 
             <h3>${member.name}</h3>
 
@@ -66,22 +79,111 @@ async function loadFaculty() {
             <div class="actions">
 
                 <button onclick="editFaculty(${member.id})">
-
                     Edit
-
                 </button>
 
                 <button onclick="deleteFaculty(${member.id})">
-
                     Delete
-
                 </button>
 
             </div>
 
         </div>
-
         `;
+    });
+
+}
+
+/*
+=========================================
+DELETE FACULTY
+=========================================
+*/
+
+async function deleteFaculty(id) {
+
+    if (!confirm("Delete this faculty member?")) return;
+
+    const { error } = await supabase
+        .from("faculty")
+        .delete()
+        .eq("id", id);
+
+    if (error) {
+        alert(error.message);
+        return;
+    }
+
+    await loadDashboard();
+}
+
+/*
+=========================================
+EDIT FACULTY
+=========================================
+*/
+
+async function editFaculty(id) {
+
+    alert("Faculty editing will be added in Part B.");
+}
+
+/*
+=========================================
+ADD FACULTY
+=========================================
+*/
+
+const addFacultyBtn = document.getElementById("addFaculty");
+
+if (addFacultyBtn) {
+
+    addFacultyBtn.addEventListener("click", async () => {
+
+        const name = prompt("Faculty Name");
+        if (!name) return;
+
+        const designation = prompt("Designation");
+        if (!designation) return;
+
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "image/*";
+
+        input.onchange = async () => {
+
+            const file = input.files[0];
+
+            if (!file) return;
+
+            const image_url = await uploadFile("faculty", file);
+
+            if (!image_url) {
+                alert("Image upload failed.");
+                return;
+            }
+
+            const { error } = await supabase
+                .from("faculty")
+                .insert([
+                    {
+                        name,
+                        designation,
+                        image_url
+                    }
+                ]);
+
+            if (error) {
+                alert(error.message);
+                return;
+            }
+
+            alert("Faculty added successfully.");
+
+            await loadDashboard();
+        };
+
+        input.click();
 
     });
 
