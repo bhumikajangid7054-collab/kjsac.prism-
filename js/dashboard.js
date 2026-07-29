@@ -1,275 +1,1150 @@
-/*
-=========================================
-PRISM ADMIN DASHBOARD
-=========================================
-*/
+// ==========================================
+// DASHBOARD INITIALIZATION
+// ==========================================
 
-document.addEventListener("DOMContentLoaded", () => {
-    loadDashboard();
+document.addEventListener("DOMContentLoaded", async () => {
+
+    setupNavigation();
+
+    await loadDashboard();
+
+    initializeFaculty();
+
+    initializeDataLabs();
+
+    initializeEvents();
+
+    initializeGallery();
+
+    initializeNewsletters();
+
 });
 
-/*
-=========================================
-DASHBOARD
-=========================================
-*/
+// ==========================================
+// SIDEBAR NAVIGATION
+// ==========================================
+
+function setupNavigation() {
+
+    const buttons = document.querySelectorAll(".nav-btn");
+
+    const pages = document.querySelectorAll(".page");
+
+    buttons.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            const section = button.dataset.section;
+
+            buttons.forEach(btn => btn.classList.remove("active"));
+
+            button.classList.add("active");
+
+            pages.forEach(page => page.classList.remove("active"));
+
+            const target = document.getElementById(section + "Section");
+
+            if (target) {
+
+                target.classList.add("active");
+
+            }
+
+        });
+
+    });
+
+}
+
+// ==========================================
+// DASHBOARD COUNTS
+// ==========================================
 
 async function loadDashboard() {
-    await loadStatistics();
-    await loadFaculty();
-    await loadDataLabs();
-    await loadEvents();
-    await loadNewsletters();
+
+    try {
+
+        showLoader();
+
+        const faculty = await fetchTable("faculty");
+
+        const datalabs = await fetchTable("datalabs");
+
+        const events = await fetchTable("events");
+
+        const newsletters = await fetchTable("newsletters");
+
+        document.getElementById("facultyCount").textContent =
+            faculty.length;
+
+        document.getElementById("datalabCount").textContent =
+            datalabs.length;
+
+        document.getElementById("eventCount").textContent =
+            events.length;
+
+        document.getElementById("newsletterCount").textContent =
+            newsletters.length;
+
+    }
+
+    catch (err) {
+
+        console.error(err);
+
+        showToast(err.message, "error");
+
+    }
+
+    finally {
+
+        hideLoader();
+
+    }
+
 }
 
-/*
-=========================================
-STATISTICS
-=========================================
-*/
+// ==========================================
+// PLACEHOLDER FUNCTIONS
+// (implemented in later parts)
+// ==========================================
 
-async function loadStatistics() {
+function initializeFaculty() {}
 
-    const faculty = await getFaculty();
-    const datalabs = await getDataLabs();
-    const events = await getEvents();
-    const newsletters = await getNewsletters();
+function initializeDataLabs() {}
 
-    const facultyCount = document.getElementById("facultyCount");
-    const datalabCount = document.getElementById("datalabCount");
-    const eventCount = document.getElementById("eventCount");
-    const newsletterCount = document.getElementById("newsletterCount");
+function initializeEvents() {}
 
-    if (facultyCount) facultyCount.textContent = faculty.length;
-    if (datalabCount) datalabCount.textContent = datalabs.length;
-    if (eventCount) eventCount.textContent = events.length;
-    if (newsletterCount) newsletterCount.textContent = newsletters.length;
+function initializeGallery() {}
+
+function initializeNewsletters() {}
+
+// ==========================================
+// FACULTY CRUD
+// ==========================================
+
+function initializeFaculty() {
+
+    loadFaculty();
+
+    const addBtn = document.getElementById("addFacultyBtn");
+    const modal = document.getElementById("facultyModal");
+    const closeBtn = document.getElementById("closeFacultyModal");
+    const form = document.getElementById("facultyForm");
+
+    addBtn?.addEventListener("click", () => {
+
+        form.reset();
+
+        document.getElementById("facultyId").value = "";
+
+        document.getElementById("facultyPreview").style.display = "none";
+
+        document.getElementById("facultyModalTitle").textContent =
+            "Add Faculty";
+
+        modal.classList.add("show");
+
+    });
+
+    closeBtn?.addEventListener("click", () => {
+
+        modal.classList.remove("show");
+
+    });
+
+    window.addEventListener("click", e => {
+
+        if (e.target === modal) {
+
+            modal.classList.remove("show");
+
+        }
+
+    });
+
+    document
+        .getElementById("facultyImage")
+        .addEventListener("change", previewFacultyImage);
+
+    form.addEventListener("submit", saveFaculty);
+
 }
 
-/*
-=========================================
-FACULTY
-=========================================
-*/
+// ==========================================
+// LOAD FACULTY
+// ==========================================
 
 async function loadFaculty() {
 
-    const container = document.getElementById("facultyList");
+    try {
 
-    if (!container) return;
+        const faculty = await fetchTable("faculty");
 
-    container.innerHTML = "";
+        const table = document.getElementById("facultyTable");
 
-    const faculty = await getFaculty();
+        table.innerHTML = "";
 
-    faculty.forEach(member => {
+        faculty.forEach(member => {
 
-        container.innerHTML += `
-        <div class="admin-card">
+            table.innerHTML += `
+                <tr>
 
-            <img
-                src="${member.image_url || ""}"
-                alt="${member.name}"
-                class="faculty-preview">
+                    <td>
+                        <img src="${member.image}" width="70">
+                    </td>
 
-            <h3>${member.name}</h3>
+                    <td>${member.name}</td>
 
-            <p>${member.designation}</p>
+                    <td>${member.designation}</td>
 
-            <div class="actions">
+                    <td>
 
-                <button onclick="editFaculty(${member.id})">
-                    Edit
-                </button>
+                        <button
+                            class="edit-btn"
+                            onclick="editFaculty(${member.id})">
 
-                <button onclick="deleteFaculty(${member.id})">
-                    Delete
-                </button>
+                            Edit
 
-            </div>
+                        </button>
 
-        </div>
-        `;
-    });
+                        <button
+                            class="delete-btn"
+                            onclick="deleteFaculty(${member.id})">
 
-}
+                            Delete
 
-/*
-=========================================
-DELETE FACULTY
-=========================================
-*/
+                        </button>
 
-async function deleteFaculty(id) {
+                    </td>
 
-    if (!confirm("Delete this faculty member?")) return;
+                </tr>
+            `;
 
-    const { error } = await supabase
-        .from("faculty")
-        .delete()
-        .eq("id", id);
+        });
 
-    if (error) {
-        alert(error.message);
-        return;
     }
 
-    await loadDashboard();
+    catch(err){
+
+        console.error(err);
+
+        showToast(err.message,"error");
+
+    }
+
 }
 
-/*
-=========================================
-EDIT FACULTY
-=========================================
-*/
+// ==========================================
+// IMAGE PREVIEW
+// ==========================================
 
-async function editFaculty(id) {
+function previewFacultyImage(e){
 
-    alert("Faculty editing will be added in Part B.");
+    const file = e.target.files[0];
+
+    if(!file) return;
+
+    const preview = document.getElementById("facultyPreview");
+
+    preview.src = URL.createObjectURL(file);
+
+    preview.style.display = "block";
+
 }
 
-/*
-=========================================
-ADD FACULTY
-=========================================
-*/
+// ==========================================
+// SAVE FACULTY
+// ==========================================
 
-const addFacultyBtn = document.getElementById("addFaculty");
+async function saveFaculty(e){
 
-if (addFacultyBtn) {
+    e.preventDefault();
 
-    addFacultyBtn.addEventListener("click", async () => {
+    try{
 
-        const name = prompt("Faculty Name");
-        if (!name) return;
+        showLoader();
 
-        const designation = prompt("Designation");
-        if (!designation) return;
+        const id =
+            document.getElementById("facultyId").value;
 
-        const input = document.createElement("input");
-        input.type = "file";
-        input.accept = "image/*";
+        const name =
+            document.getElementById("facultyName").value.trim();
 
-        input.onchange = async () => {
+        const designation =
+            document.getElementById("facultyDesignation").value.trim();
 
-            const file = input.files[0];
+        const imageFile =
+            document.getElementById("facultyImage").files[0];
 
-            if (!file) return;
+        let image = null;
 
-            const image_url = await uploadFile("faculty", file);
+        if(imageFile){
 
-            if (!image_url) {
-                alert("Image upload failed.");
-                return;
-            }
+            image = await uploadFile(
+                "faculty",
+                imageFile
+            );
 
-            const { error } = await supabase
-                .from("faculty")
-                .insert([
-                    {
-                        name,
-                        designation,
-                        image_url
-                    }
-                ]);
+        }
 
-            if (error) {
-                alert(error.message);
-                return;
-            }
+        const data = {
 
-            alert("Faculty added successfully.");
+            name,
 
-            await loadDashboard();
+            designation
+
         };
 
-        input.click();
+        if(image){
+
+            data.image = image;
+
+        }
+
+        if(id){
+
+            await updateRow(
+                "faculty",
+                id,
+                data
+            );
+
+            showToast("Faculty updated");
+
+        }
+
+        else{
+
+            await insertRow(
+                "faculty",
+                data
+            );
+
+            showToast("Faculty added");
+
+        }
+
+        document
+            .getElementById("facultyModal")
+            .classList
+            .remove("show");
+
+        await loadFaculty();
+
+        await loadDashboard();
+
+    }
+
+    catch(err){
+
+        console.error(err);
+
+        showToast(err.message,"error");
+
+    }
+
+    finally{
+
+        hideLoader();
+
+    }
+
+}
+
+// ==========================================
+// EDIT FACULTY
+// ==========================================
+
+async function editFaculty(id){
+
+    const faculty =
+        await fetchTable("faculty");
+
+    const member =
+        faculty.find(f=>f.id===id);
+
+    if(!member) return;
+
+    document.getElementById("facultyId").value =
+        member.id;
+
+    document.getElementById("facultyName").value =
+        member.name;
+
+    document.getElementById("facultyDesignation").value =
+        member.designation;
+
+    if(member.image){
+
+        const preview =
+            document.getElementById("facultyPreview");
+
+        preview.src =
+            member.image;
+
+        preview.style.display =
+            "block";
+
+    }
+
+    document.getElementById("facultyModalTitle").textContent =
+        "Edit Faculty";
+
+    document.getElementById("facultyModal")
+        .classList
+        .add("show");
+
+}
+
+// ==========================================
+// DELETE FACULTY
+// ==========================================
+
+async function deleteFaculty(id){
+
+    if(!confirm("Delete this faculty member?"))
+        return;
+
+    try{
+
+        showLoader();
+
+        await deleteRow(
+            "faculty",
+            id
+        );
+
+        showToast("Faculty deleted");
+
+        await loadFaculty();
+
+        await loadDashboard();
+
+    }
+
+    catch(err){
+
+        console.error(err);
+
+        showToast(err.message,"error");
+
+    }
+
+    finally{
+
+        hideLoader();
+
+    }
+
+}
+
+// ==========================================
+// DATALABS CRUD
+// ==========================================
+
+function initializeDataLabs() {
+
+    loadDataLabs();
+
+    const addBtn = document.getElementById("addDataLabBtn");
+    const modal = document.getElementById("datalabModal");
+    const closeBtn = document.getElementById("closeDataLabModal");
+    const form = document.getElementById("datalabForm");
+
+    addBtn?.addEventListener("click", () => {
+
+        form.reset();
+
+        document.getElementById("datalabId").value = "";
+
+        document.getElementById("datalabPreview").style.display = "none";
+
+        document.getElementById("datalabModalTitle").textContent =
+            "Add DataLab";
+
+        modal.classList.add("show");
 
     });
 
+    closeBtn?.addEventListener("click", () => {
+
+        modal.classList.remove("show");
+
+    });
+
+    window.addEventListener("click", e => {
+
+        if (e.target === modal) {
+
+            modal.classList.remove("show");
+
+        }
+
+    });
+
+    document
+        .getElementById("datalabImage")
+        .addEventListener("change", previewDataLabImage);
+
+    form.addEventListener("submit", saveDataLab);
+
 }
 
-/*
-=========================================
-DATALABS
-=========================================
-*/
+// ==========================================
+// LOAD DATALABS
+// ==========================================
 
 async function loadDataLabs() {
 
-    const labs = await getDataLabs();
+    try {
 
-    const container = document.getElementById("datalabList");
+        const labs = await fetchTable("datalabs");
 
-    container.innerHTML = "";
+        const table = document.getElementById("datalabTable");
 
-    labs.forEach(item => {
+        table.innerHTML = "";
 
-        container.innerHTML += `
+        labs.forEach(lab => {
 
-        <div class="admin-card">
+            table.innerHTML += `
+            <tr>
 
-            <h3>${item.title}</h3>
+                <td>
+                    <img src="${lab.image || ""}" width="70">
+                </td>
 
-            <p>${item.category}</p>
+                <td>${lab.title}</td>
 
-            <div class="actions">
+                <td>${lab.description}</td>
 
-                <button onclick="editDataLab(${item.id})">
+                <td>
 
-                    Edit
+                    <button
+                        class="edit-btn"
+                        onclick="editDataLab(${lab.id})">
 
-                </button>
+                        Edit
 
-                <button onclick="deleteDataLab(${item.id})">
+                    </button>
 
-                    Delete
+                    <button
+                        class="delete-btn"
+                        onclick="deleteDataLab(${lab.id})">
 
-                </button>
+                        Delete
 
-            </div>
+                    </button>
 
-        </div>
+                </td>
 
-        `;
+            </tr>
+            `;
 
-    });
+        });
+
+    }
+
+    catch(err){
+
+        console.error(err);
+
+        showToast(err.message,"error");
+
+    }
 
 }
 
-/*
-=========================================
-EVENTS
-=========================================
-*/
+// ==========================================
+// IMAGE PREVIEW
+// ==========================================
+
+function previewDataLabImage(e){
+
+    const file = e.target.files[0];
+
+    if(!file) return;
+
+    const preview = document.getElementById("datalabPreview");
+
+    preview.src = URL.createObjectURL(file);
+
+    preview.style.display = "block";
+
+}
+
+// ==========================================
+// SAVE DATALAB
+// ==========================================
+
+async function saveDataLab(e){
+
+    e.preventDefault();
+
+    try{
+
+        showLoader();
+
+        const id =
+            document.getElementById("datalabId").value;
+
+        const title =
+            document.getElementById("datalabTitle").value.trim();
+
+        const description =
+            document.getElementById("datalabDescription").value.trim();
+
+        const imageFile =
+            document.getElementById("datalabImage").files[0];
+
+        let image = null;
+
+        if(imageFile){
+
+            image = await uploadFile(
+                "documents",
+                imageFile
+            );
+
+        }
+
+        const data = {
+
+            title,
+
+            description
+
+        };
+
+        if(image){
+
+            data.image = image;
+
+        }
+
+        if(id){
+
+            await updateRow(
+                "datalabs",
+                id,
+                data
+            );
+
+            showToast("DataLab updated");
+
+        }
+
+        else{
+
+            await insertRow(
+                "datalabs",
+                data
+            );
+
+            showToast("DataLab added");
+
+        }
+
+        document
+            .getElementById("datalabModal")
+            .classList
+            .remove("show");
+
+        await loadDataLabs();
+
+        await loadDashboard();
+
+    }
+
+    catch(err){
+
+        console.error(err);
+
+        showToast(err.message,"error");
+
+    }
+
+    finally{
+
+        hideLoader();
+
+    }
+
+}
+
+// ==========================================
+// EDIT DATALAB
+// ==========================================
+
+async function editDataLab(id){
+
+    const labs = await fetchTable("datalabs");
+
+    const lab = labs.find(l => l.id === id);
+
+    if(!lab) return;
+
+    document.getElementById("datalabId").value =
+        lab.id;
+
+    document.getElementById("datalabTitle").value =
+        lab.title;
+
+    document.getElementById("datalabDescription").value =
+        lab.description;
+
+    if(lab.image){
+
+        const preview =
+            document.getElementById("datalabPreview");
+
+        preview.src =
+            lab.image;
+
+        preview.style.display =
+            "block";
+
+    }
+
+    document.getElementById("datalabModalTitle").textContent =
+        "Edit DataLab";
+
+    document.getElementById("datalabModal")
+        .classList
+        .add("show");
+
+}
+
+// ==========================================
+// DELETE DATALAB
+// ==========================================
+
+async function deleteDataLab(id){
+
+    if(!confirm("Delete this DataLab?"))
+        return;
+
+    try{
+
+        showLoader();
+
+        await deleteRow(
+            "datalabs",
+            id
+        );
+
+        showToast("DataLab deleted");
+
+        await loadDataLabs();
+
+        await loadDashboard();
+
+    }
+
+    catch(err){
+
+        console.error(err);
+
+        showToast(err.message,"error");
+
+    }
+
+    finally{
+
+        hideLoader();
+
+    }
+
+}
+
+// ==========================================
+// EVENTS CRUD
+// ==========================================
+
+function initializeEvents() {
+
+    loadEvents();
+
+    const addBtn = document.getElementById("addEventBtn");
+    const modal = document.getElementById("eventModal");
+    const closeBtn = document.getElementById("closeEventModal");
+    const form = document.getElementById("eventForm");
+
+    addBtn?.addEventListener("click", () => {
+
+        form.reset();
+
+        document.getElementById("eventId").value = "";
+
+        document.getElementById("eventPreview").style.display = "none";
+
+        document.getElementById("eventModalTitle").textContent =
+            "Add Event";
+
+        modal.classList.add("show");
+
+    });
+
+    closeBtn?.addEventListener("click", () => {
+
+        modal.classList.remove("show");
+
+    });
+
+    window.addEventListener("click", e => {
+
+        if (e.target === modal) {
+
+            modal.classList.remove("show");
+
+        }
+
+    });
+
+    document
+        .getElementById("eventCover")
+        .addEventListener("change", previewEventImage);
+
+    form.addEventListener("submit", saveEvent);
+
+}
+
+// ==========================================
+// LOAD EVENTS
+// ==========================================
 
 async function loadEvents() {
 
-    const events = await getEvents();
+    try {
 
-    const container = document.getElementById("eventList");
+        const events = await fetchTable("events");
 
-    container.innerHTML = "";
+        const table = document.getElementById("eventTable");
 
-    events.forEach(event => {
+        table.innerHTML = "";
 
-        container.innerHTML += `
+        events.forEach(event => {
 
-        <div class="admin-card">
+            table.innerHTML += `
 
-            <h3>${event.title}</h3>
+            <tr>
 
-            <p>${event.description}</p>
+                <td>
+                    <img src="${event.image || ""}" width="70">
+                </td>
 
-            <div class="actions">
+                <td>${event.title}</td>
 
-                <button onclick="editEvent(${event.id})">
+                <td>${event.date}</td>
 
-                    Edit
+                <td>${event.venue}</td>
 
-                </button>
+                <td>
 
-                <button onclick="deleteEvent(${event.id})">
+                    <button
+                        class="edit-btn"
+                        onclick="editEvent(${event.id})">
+
+                        Edit
+
+                    </button>
+
+                    <button
+                        class="delete-btn"
+                        onclick="deleteEvent(${event.id})">
+
+                        Delete
+
+                    </button>
+
+                </td>
+
+            </tr>
+
+            `;
+
+        });
+
+    }
+
+    catch(err){
+
+        console.error(err);
+
+        showToast(err.message,"error");
+
+    }
+
+}
+
+// ==========================================
+// IMAGE PREVIEW
+// ==========================================
+
+function previewEventImage(e){
+
+    const file = e.target.files[0];
+
+    if(!file) return;
+
+    const preview = document.getElementById("eventPreview");
+
+    preview.src = URL.createObjectURL(file);
+
+    preview.style.display = "block";
+
+}
+
+// ==========================================
+// SAVE EVENT
+// ==========================================
+
+async function saveEvent(e){
+
+    e.preventDefault();
+
+    try{
+
+        showLoader();
+
+        const id =
+            document.getElementById("eventId").value;
+
+        const title =
+            document.getElementById("eventTitle").value.trim();
+
+        const description =
+            document.getElementById("eventDescription").value.trim();
+
+        const date =
+            document.getElementById("eventDate").value;
+
+        const venue =
+            document.getElementById("eventVenue").value.trim();
+
+        const imageFile =
+            document.getElementById("eventCover").files[0];
+
+        let image = null;
+
+        if(imageFile){
+
+            image = await uploadFile(
+                "events",
+                imageFile
+            );
+
+        }
+
+        const data = {
+
+            title,
+
+            description,
+
+            date,
+
+            venue
+
+        };
+
+        if(image){
+
+            data.image = image;
+
+        }
+
+        if(id){
+
+            await updateRow(
+                "events",
+                id,
+                data
+            );
+
+            showToast("Event updated");
+
+        }
+
+        else{
+
+            await insertRow(
+                "events",
+                data
+            );
+
+            showToast("Event added");
+
+        }
+
+        document
+            .getElementById("eventModal")
+            .classList
+            .remove("show");
+
+        await loadEvents();
+
+        await loadDashboard();
+
+    }
+
+    catch(err){
+
+        console.error(err);
+
+        showToast(err.message,"error");
+
+    }
+
+    finally{
+
+        hideLoader();
+
+    }
+
+}
+
+// ==========================================
+// EDIT EVENT
+// ==========================================
+
+async function editEvent(id){
+
+    const events = await fetchTable("events");
+
+    const event = events.find(e => e.id === id);
+
+    if(!event) return;
+
+    document.getElementById("eventId").value =
+        event.id;
+
+    document.getElementById("eventTitle").value =
+        event.title;
+
+    document.getElementById("eventDescription").value =
+        event.description;
+
+    document.getElementById("eventDate").value =
+        event.date;
+
+    document.getElementById("eventVenue").value =
+        event.venue;
+
+    if(event.image){
+
+        const preview =
+            document.getElementById("eventPreview");
+
+        preview.src =
+            event.image;
+
+        preview.style.display =
+            "block";
+
+    }
+
+    document.getElementById("eventModalTitle").textContent =
+        "Edit Event";
+
+    document.getElementById("eventModal")
+        .classList
+        .add("show");
+
+}
+
+// ==========================================
+// DELETE EVENT
+// ==========================================
+
+async function deleteEvent(id){
+
+    if(!confirm("Delete this event?"))
+        return;
+
+    try{
+
+        showLoader();
+
+        await deleteRow(
+            "events",
+            id
+        );
+
+        showToast("Event deleted");
+
+        await loadEvents();
+
+        await loadDashboard();
+
+    }
+
+    catch(err){
+
+        console.error(err);
+
+        showToast(err.message,"error");
+
+    }
+
+    finally{
+
+        hideLoader
+
+            // ==========================================
+// GALLERY
+// ==========================================
+
+function initializeGallery() {
+
+    loadGallery();
+
+    const modal = document.getElementById("galleryModal");
+
+    document.getElementById("uploadGalleryBtn")
+        ?.addEventListener("click", () => {
+
+            document.getElementById("galleryForm").reset();
+
+            modal.classList.add("show");
+
+        });
+
+    document.getElementById("closeGalleryModal")
+        ?.addEventListener("click", () => {
+
+            modal.classList.remove("show");
+
+        });
+
+    document.getElementById("galleryForm")
+        ?.addEventListener("submit", uploadGallery);
+
+}
+
+async function loadGallery() {
+
+    const gallery = await fetchTable("event_gallery");
+
+    const grid = document.getElementById("galleryGrid");
+
+    grid.innerHTML = "";
+
+    gallery.forEach(item => {
+
+        grid.innerHTML += `
+
+        <div class="gallery-item">
+
+            <img src="${item.image_url}" alt="">
+
+            <div class="gallery-actions">
+
+                <span>${item.title}</span>
+
+                <button
+                    class="delete-btn"
+                    onclick="deleteGallery(${item.id})">
 
                     Delete
 
@@ -285,330 +1160,335 @@ async function loadEvents() {
 
 }
 
-/*
-=========================================
-NEWSLETTERS
-=========================================
-*/
+async function uploadGallery(e){
+
+    e.preventDefault();
+
+    try{
+
+        showLoader();
+
+        const title =
+            document.getElementById("galleryTitle").value;
+
+        const files =
+            document.getElementById("galleryImages").files;
+
+        for(const file of files){
+
+            const url = await uploadFile(
+                "gallery",
+                file
+            );
+
+            await insertRow(
+                "event_gallery",
+                {
+
+                    title,
+
+                    image_url:url
+
+                }
+            );
+
+        }
+
+        showToast("Gallery updated");
+
+        document
+            .getElementById("galleryModal")
+            .classList
+            .remove("show");
+
+        await loadGallery();
+
+    }
+
+    catch(err){
+
+        console.error(err);
+
+        showToast(err.message,"error");
+
+    }
+
+    finally{
+
+        hideLoader();
+
+    }
+
+}
+
+async function deleteGallery(id){
+
+    if(!confirm("Delete image?"))
+        return;
+
+    await deleteRow(
+        "event_gallery",
+        id
+    );
+
+    showToast("Deleted");
+
+    loadGallery();
+
+}
+
+// ==========================================
+// NEWSLETTER CRUD
+// ==========================================
+
+function initializeNewsletters() {
+
+    loadNewsletters();
+
+    const modal = document.getElementById("newsletterModal");
+
+    document.getElementById("addNewsletterBtn")
+        ?.addEventListener("click", () => {
+
+            document.getElementById("newsletterForm").reset();
+
+            document.getElementById("newsletterId").value = "";
+
+            document.getElementById("newsletterPreview").style.display = "none";
+
+            document.getElementById("newsletterModalTitle").textContent =
+                "Upload Newsletter";
+
+            modal.classList.add("show");
+
+        });
+
+    document.getElementById("closeNewsletterModal")
+        ?.addEventListener("click", () => {
+
+            modal.classList.remove("show");
+
+        });
+
+    document.getElementById("newsletterCover")
+        ?.addEventListener("change", e => {
+
+            const file = e.target.files[0];
+
+            if (!file) return;
+
+            const preview = document.getElementById("newsletterPreview");
+
+            preview.src = URL.createObjectURL(file);
+
+            preview.style.display = "block";
+
+        });
+
+    document.getElementById("newsletterForm")
+        ?.addEventListener("submit", saveNewsletter);
+
+}
+
+// ==========================================
+// LOAD NEWSLETTERS
+// ==========================================
 
 async function loadNewsletters() {
 
-    const newsletters = await getNewsletters();
+    try {
 
-    const container = document.getElementById("newsletterList");
+        const newsletters = await fetchTable("newsletters");
 
-    container.innerHTML = "";
+        const table = document.getElementById("newsletterTable");
 
-    newsletters.forEach(newsletter => {
+        table.innerHTML = "";
 
-        container.innerHTML += `
+        newsletters.forEach(newsletter => {
 
-        <div class="admin-card">
+            table.innerHTML += `
 
-            <h3>${newsletter.title}</h3>
+            <tr>
 
-            <p>Issue ${newsletter.issue}</p>
+                <td>
 
-            <div class="actions">
+                    <img src="${newsletter.cover_image || ""}" width="70">
 
-                <button onclick="editNewsletter(${newsletter.id})">
+                </td>
 
-                    Edit
+                <td>
 
-                </button>
+                    ${newsletter.title}
 
-                <button onclick="deleteNewsletter(${newsletter.id})">
+                </td>
 
-                    Delete
+                <td>
 
-                </button>
+                    <a href="${newsletter.pdf_url}"
+                       target="_blank">
 
-            </div>
+                        View PDF
 
-        </div>
+                    </a>
 
-        `;
+                </td>
 
-    });
+                <td>
 
-}
+                    <button
+                        class="delete-btn"
+                        onclick="deleteNewsletter(${newsletter.id})">
 
-/*
-=========================================
-DELETE FUNCTIONS
-=========================================
-*/
+                        Delete
 
-async function deleteFaculty(id) {
+                    </button>
 
-    if (!confirm("Delete this faculty member?")) return;
+                </td>
 
-    await supabase
-        .from("faculty")
-        .delete()
-        .eq("id", id);
+            </tr>
 
-    await loadDashboard();
+            `;
 
-}
-
-async function deleteDataLab(id) {
-
-    if (!confirm("Delete this DataLab entry?")) return;
-
-    await supabase
-        .from("datalabs")
-        .delete()
-        .eq("id", id);
-
-    await loadDashboard();
-
-}
-
-async function deleteEvent(id) {
-
-    if (!confirm("Delete this event?")) return;
-
-    await supabase
-        .from("events")
-        .delete()
-        .eq("id", id);
-
-    await loadDashboard();
-
-}
-
-async function deleteNewsletter(id) {
-
-    if (!confirm("Delete this newsletter?")) return;
-
-    await supabase
-        .from("newsletters")
-        .delete()
-        .eq("id", id);
-
-    await loadDashboard();
-
-}
-
-/*
-=========================================
-PLACEHOLDER EDIT FUNCTIONS
-=========================================
-*/
-
-function editFaculty(id) {
-
-    alert("Edit Faculty: " + id);
-
-}
-
-function editDataLab(id) {
-
-    alert("Edit DataLab: " + id);
-
-}
-
-function editEvent(id) {
-
-    alert("Edit Event: " + id);
-
-}
-
-function editNewsletter(id) {
-
-    alert("Edit Newsletter: " + id);
-
-}
-
-
-/*
-=========================================
-ADD FACULTY
-=========================================
-*/
-
-document.getElementById("addFaculty")?.addEventListener("click", async () => {
-
-    const name = prompt("Faculty Name");
-
-    if (!name) return;
-
-    const designation = prompt("Designation");
-
-    if (!designation) return;
-
-    const fileInput = document.createElement("input");
-
-fileInput.type = "file";
-
-fileInput.accept = "image/*";
-
-fileInput.click();
-
-fileInput.onchange = async () => {
-
-    const file = fileInput.files[0];
-
-    if (!file) return;
-
-    const image_url = await uploadFile("faculty", file);
-
-};
-
-    const { error } = await supabase
-        .from("faculty")
-        .insert([
-            {
-                name,
-                designation,
-                image_url
-            }
-        ]);
-
-    if (error) {
-
-        alert(error.message);
-
-        return;
+        });
 
     }
 
-    await loadDashboard();
+    catch(err){
 
-});
+        console.error(err);
 
-/*
-=========================================
-ADD DATALAB
-=========================================
-*/
-
-document.getElementById("addDataLab")?.addEventListener("click", async () => {
-
-    const category = prompt("Category");
-
-    if (!category) return;
-
-    const title = prompt("Title");
-
-    if (!title) return;
-
-    const description = prompt("Description");
-
-    const file_url = prompt("Research File URL");
-
-    const cover_image = prompt("Cover Image URL");
-
-    const { error } = await supabase
-        .from("datalabs")
-        .insert([
-            {
-                category,
-                title,
-                description,
-                file_url,
-                cover_image
-            }
-        ]);
-
-    if (error) {
-
-        alert(error.message);
-
-        return;
+        showToast(err.message,"error");
 
     }
 
-    await loadDashboard();
+}
 
-});
+// ==========================================
+// SAVE NEWSLETTER
+// ==========================================
 
-/*
-=========================================
-ADD EVENT
-=========================================
-*/
+async function saveNewsletter(e){
 
-document.getElementById("addEvent")?.addEventListener("click", async () => {
+    e.preventDefault();
 
-    const title = prompt("Event Name");
+    try{
 
-    if (!title) return;
+        showLoader();
 
-    const description = prompt("Description");
+        const title =
+            document.getElementById("newsletterTitle").value.trim();
 
-    const fileInput = document.createElement("input");
+        const coverFile =
+            document.getElementById("newsletterCover").files[0];
 
-fileInput.type = "file";
+        const pdfFile =
+            document.getElementById("newsletterPdf").files[0];
 
-fileInput.accept = "image/*";
+        if(!pdfFile){
 
-fileInput.click();
+            showToast("Please select a PDF","error");
 
-fileInput.onchange = async () => {
+            return;
 
-    const file = fileInput.files[0];
+        }
 
-    if (!file) return;
+        let cover = "";
 
-    const cover_image = await uploadFile("events", file);
+        if(coverFile){
 
-    await supabase
-        .from("events")
-        .insert([
+            cover = await uploadFile(
+                "newsletters",
+                coverFile
+            );
+
+        }
+
+        const pdf = await uploadFile(
+            "newsletters",
+            pdfFile
+        );
+
+        await insertRow(
+            "newsletters",
             {
+
                 title,
-                description,
-                cover_image
+
+                cover_image:cover,
+
+                pdf_url:pdf
+
             }
-        ]);
+        );
 
-    await loadDashboard();
+        showToast("Newsletter uploaded");
 
-};
+        document
+            .getElementById("newsletterModal")
+            .classList
+            .remove("show");
 
-});
+        await loadNewsletters();
 
-/*
-=========================================
-ADD NEWSLETTER
-=========================================
-*/
-
-document.getElementById("addNewsletter")?.addEventListener("click", async () => {
-
-    const title = prompt("Newsletter Title");
-
-    if (!title) return;
-
-    const issue = prompt("Issue Number");
-
-    if (!issue) return;
-
-    const cover_image = prompt("Cover Image URL");
-
-    const pdf_url = prompt("PDF URL");
-
-    const { error } = await supabase
-        .from("newsletters")
-        .insert([
-            {
-                title,
-                issue,
-                cover_image,
-                pdf_url
-            }
-        ]);
-
-    if (error) {
-
-        alert(error.message);
-
-        return;
+        await loadDashboard();
 
     }
 
-    await loadDashboard();
+    catch(err){
 
-});
+        console.error(err);
+
+        showToast(err.message,"error");
+
+    }
+
+    finally{
+
+        hideLoader();
+
+    }
+
+}
+
+// ==========================================
+// DELETE NEWSLETTER
+// ==========================================
+
+async function deleteNewsletter(id){
+
+    if(!confirm("Delete newsletter?"))
+
+        return;
+
+    try{
+
+        showLoader();
+
+        await deleteRow(
+            "newsletters",
+            id
+        );
+
+        showToast("Newsletter deleted");
+
+        await loadNewsletters();
+
+        await loadDashboard();
+
+    }
+
+    catch(err){
+
+        console.error(err);
+
+        showToast(err.message,"error");
+
+    }
+
+    finally{
+
+        hideLoader();
+
+    }
+
+}
