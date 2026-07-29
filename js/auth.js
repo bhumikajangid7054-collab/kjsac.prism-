@@ -40,7 +40,10 @@ try {
 
     alert("Before signIn");
 
-    const { error } = await supabase.auth.signInWithPassword({
+    alert(window.supabaseClient);
+    alert(window.supabaseClient.auth);
+
+    const { error } = await window.supabaseClient.auth.signInWithPassword({
         email,
         password
     });
