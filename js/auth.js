@@ -28,7 +28,9 @@ function initializeLogin() {
     form.addEventListener("submit", async (e) => {
 
         e.preventDefault();
-console.log("Login button clicked");
+
+alert("Login button clicked");
+        
         const email = document.getElementById("email").value.trim();
         const password = document.getElementById("password").value;
 
