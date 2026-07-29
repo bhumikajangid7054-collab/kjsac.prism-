@@ -7,9 +7,14 @@ const SUPABASE_URL = "https://tzabdsmfesbttzmmqtzn.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR6YWJkc21mZXNidHR6bW1xdHpuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUwNzA0MzcsImV4cCI6MjEwMDY0NjQzN30.3yyWogU5ScNEX39DcpfI_dgtSIUGJ87WVo2kp_Tzwq8";
 
 // Create client
-const supabase = window.supabase.createClient(
+const { createClient } = window.supabase;
+
+const supabaseClient = createClient(
     SUPABASE_URL,
     SUPABASE_ANON_KEY
+);
+
+window.supabaseClient = supabaseClient;
 );
 alert("window.supabase = " + typeof window.supabase);
 alert("createClient = " + typeof window.supabase.createClient);
@@ -20,7 +25,7 @@ alert("auth = " + typeof supabase.auth);
 // ==========================================
 
 async function getCurrentUser() {
-    const { data, error } = await supabase.auth.getUser();
+    const { data, error } = await window.supabaseClient.auth.getUser()
 
     if (error) {
         console.error(error);
@@ -31,7 +36,7 @@ async function getCurrentUser() {
 }
 
 async function signOut() {
-    await supabase.auth.signOut();
+    await window.supabaseClient.auth.signOut()
 }
 
 // ==========================================
@@ -48,7 +53,7 @@ async function uploadFile(bucket, file, path = "") {
         ? `${path}/${filename}`
         : filename;
 
-    const { error } = await supabase.storage
+    const { error } = await window.supabaseClient.storage
         .from(bucket)
         .upload(filePath, file, {
             upsert: true
@@ -56,7 +61,7 @@ async function uploadFile(bucket, file, path = "") {
 
     if (error) throw error;
 
-    const { data } = supabase.storage
+    const { data } = window.supabaseClient.storage
         .from(bucket)
         .getPublicUrl(filePath);
 
@@ -71,7 +76,7 @@ async function deleteFile(bucket, filePath) {
 
     if (parts.length < 2) return;
 
-    await supabase.storage
+    await window.supabaseClient.storage
         .from(bucket)
         .remove([parts[1]]);
 }
@@ -82,8 +87,8 @@ async function deleteFile(bucket, filePath) {
 
 async function fetchTable(table) {
 
-    const { data, error } = await supabase
-        .from(table)
+    const { data, error } = await window.supabaseClient
+    .from(table)
         .select("*")
         .order("id", { ascending: false });
 
@@ -94,8 +99,8 @@ async function fetchTable(table) {
 
 async function insertRow(table, values) {
 
-    const { error } = await supabase
-        .from(table)
+    const { error } = await window.supabaseClient
+    .from(table)
         .insert(values);
 
     if (error) throw error;
@@ -103,8 +108,8 @@ async function insertRow(table, values) {
 
 async function updateRow(table, id, values) {
 
-    const { error } = await supabase
-        .from(table)
+    const { error } = window.supabaseClient
+    .from(table)
         .update(values)
         .eq("id", id);
 
@@ -113,8 +118,8 @@ async function updateRow(table, id, values) {
 
 async function deleteRow(table, id) {
 
-    const { error } = await supabase
-        .from(table)
+    const { error } = window.supabaseClient
+    .from(table)
         .delete()
         .eq("id", id);
 
