@@ -11,10 +11,10 @@ const supabase = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_ANON_KEY
 );
-alert(typeof window.supabase);
-alert(typeof window.supabase.createClient);
-alert(typeof supabase);
-alert(typeof supabase.auth);
+alert("window.supabase = " + typeof window.supabase);
+alert("createClient = " + typeof window.supabase.createClient);
+alert("client = " + typeof supabase);
+alert("auth = " + typeof supabase.auth);
 // ==========================================
 // AUTH HELPERS
 // ==========================================
