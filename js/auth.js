@@ -36,7 +36,7 @@ alert("Login button clicked");
 
 try {
 
-    showLoader();
+    // showLoader();
 
     alert("Before signIn");
 
@@ -49,11 +49,7 @@ try {
 
     if (error) throw error;
 
-    showToast("Login successful");
-
-    setTimeout(() => {
-        window.location.href = "dashboard.html";
-    }, 700);
+    alert("Login successful");
 
 } catch (err) {
 
@@ -63,7 +59,7 @@ try {
 
 } finally {
 
-    hideLoader();
+    // hideLoader();
 
 }
 
