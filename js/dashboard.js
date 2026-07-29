@@ -8,8 +8,6 @@ async function loadDashboard() {
 
     await loadStatistics();
 
-    await loadAnnouncements();
-
     await loadFaculty();
 
     await loadDataLabs();
@@ -25,11 +23,7 @@ async function loadDashboard() {
 STATISTICS
 =========================================
 */
-
 async function loadStatistics() {
-
-    document.getElementById("announcementCount").textContent =
-        (await getAnnouncements()).length;
 
     document.getElementById("facultyCount").textContent =
         (await getFaculty()).length;
@@ -42,54 +36,6 @@ async function loadStatistics() {
 
     document.getElementById("newsletterCount").textContent =
         (await getNewsletters()).length;
-
-}
-
-/*
-=========================================
-ANNOUNCEMENTS
-=========================================
-*/
-
-async function loadAnnouncements() {
-
-    const announcements = await getAnnouncements();
-
-    const container = document.getElementById("announcementList");
-
-    container.innerHTML = "";
-
-    announcements.forEach(item => {
-
-        container.innerHTML += `
-
-        <div class="admin-card">
-
-            <h3>${item.title}</h3>
-
-            <p>${item.description}</p>
-
-            <div class="actions">
-
-                <button onclick="editAnnouncement(${item.id})">
-
-                    Edit
-
-                </button>
-
-                <button onclick="deleteAnnouncement(${item.id})">
-
-                    Delete
-
-                </button>
-
-            </div>
-
-        </div>
-
-        `;
-
-    });
 
 }
 
@@ -291,19 +237,6 @@ DELETE FUNCTIONS
 =========================================
 */
 
-async function deleteAnnouncement(id) {
-
-    if (!confirm("Delete this announcement?")) return;
-
-    await supabase
-        .from("announcements")
-        .delete()
-        .eq("id", id);
-
-    await loadDashboard();
-
-}
-
 async function deleteFaculty(id) {
 
     if (!confirm("Delete this faculty member?")) return;
@@ -362,12 +295,6 @@ PLACEHOLDER EDIT FUNCTIONS
 =========================================
 */
 
-function editAnnouncement(id) {
-
-    alert("Edit Announcement: " + id);
-
-}
-
 function editFaculty(id) {
 
     alert("Edit Faculty: " + id);
@@ -391,42 +318,7 @@ function editNewsletter(id) {
     alert("Edit Newsletter: " + id);
 
 }
-/*
-=========================================
-ADD ANNOUNCEMENT
-=========================================
-*/
 
-document.getElementById("addAnnouncement")?.addEventListener("click", async () => {
-
-    const title = prompt("Announcement Title");
-
-    if (!title) return;
-
-    const description = prompt("Announcement Description");
-
-    if (description === null) return;
-
-    const { error } = await supabase
-        .from("announcements")
-        .insert([
-            {
-                title,
-                description
-            }
-        ]);
-
-    if (error) {
-
-        alert(error.message);
-
-        return;
-
-    }
-
-    await loadDashboard();
-
-});
 
 /*
 =========================================
