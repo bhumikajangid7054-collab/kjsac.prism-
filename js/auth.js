@@ -38,10 +38,14 @@ try {
 
     showLoader();
 
+    alert("Before signIn");
+
     const { error } = await supabase.auth.signInWithPassword({
         email,
         password
     });
+
+    alert("After signIn");
 
     if (error) throw error;
 
