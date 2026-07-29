@@ -51,13 +51,13 @@ alert("Login button clicked");
                 window.location.href = "dashboard.html";
             }, 700);
 
-        } catch (err) {
+     catch (err) {
 
-            console.error(err);
+    console.error(err);
 
-            showToast(err.message, "error");
+    alert(err.message);
 
-        } finally {
+} finally {
 
             hideLoader();
 
