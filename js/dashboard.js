@@ -460,26 +460,6 @@ fileInput.onchange = async () => {
 
     const image_url = await uploadFile("faculty", file);
 
-    const { error } = await supabase
-        .from("faculty")
-        .insert([
-            {
-                name,
-                designation,
-                image_url
-            }
-        ]);
-
-    if (error) {
-
-        alert(error.message);
-
-        return;
-
-    }
-
-    await loadDashboard();
-
 };
 
     const { error } = await supabase
@@ -593,26 +573,6 @@ fileInput.onchange = async () => {
     await loadDashboard();
 
 };
-
-    const { error } = await supabase
-        .from("events")
-        .insert([
-            {
-                title,
-                description,
-                cover_image
-            }
-        ]);
-
-    if (error) {
-
-        alert(error.message);
-
-        return;
-
-    }
-
-    await loadDashboard();
 
 });
 
