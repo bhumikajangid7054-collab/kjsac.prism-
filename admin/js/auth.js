@@ -1,4 +1,3 @@
-alert("auth.js loaded");
 // ======================================
 // PRISM ADMIN AUTH
 // ======================================
@@ -12,6 +11,35 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
+function showLoader() {
+    document.getElementById("loader")?.classList.remove("hidden");
+}
+
+function hideLoader() {
+    document.getElementById("loader")?.classList.add("hidden");
+}
+
+function showToast(message, type = "success") {
+
+    const container = document.getElementById("toastContainer");
+
+    if (!container) {
+        alert(message);
+        return;
+    }
+
+    const toast = document.createElement("div");
+
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
+
+    container.appendChild(toast);
+
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
+}
 
 function initializeLogin() {
 
@@ -28,7 +56,7 @@ function initializeLogin() {
 
         try {
 
-            const { error } =
+            const { data, error } =
                 await supabase.auth.signInWithPassword({
                     email,
                     password
@@ -36,11 +64,11 @@ function initializeLogin() {
 
             if (error) throw error;
 
-            showToast("Login successful");
+            showToast("Login successful!");
 
             setTimeout(() => {
                 window.location.href = "dashboard.html";
-            }, 800);
+            }, 1000);
 
         } catch (err) {
 
@@ -57,4 +85,3 @@ function initializeLogin() {
     });
 
 }
-
