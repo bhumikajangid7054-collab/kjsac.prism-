@@ -12,15 +12,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function checkSession() {
 
-    const { data: sessionData } =
+    const { data, error } =
         await window.supabaseClient.auth.getSession();
 
-    if (!sessionData.session) {
+    console.log(data);
+
+    if (error) {
+
+        console.error(error);
 
         window.location.href = "login.html";
+
         return;
 
     }
+
+    if (!data.session) {
+
+        window.location.href = "login.html";
+
+        return;
+
+    }
+
+}
 
 }
 
