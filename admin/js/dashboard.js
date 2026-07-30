@@ -10,15 +10,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-async function initializeDashboard() {
+async function checkSession() {
 
-    await checkSession();
+    const { data: sessionData } =
+        await window.supabaseClient.auth.getSession();
 
-    setupNavigation();
+    if (!sessionData.session) {
 
-    setupLogout();
+        window.location.href = "login.html";
+        return;
 
-    await loadDashboardStats();
+    }
+
+}
 
 }
 // ======================================
