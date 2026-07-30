@@ -461,3 +461,186 @@ async function uploadGalleryImage(file){
     return data.publicUrl;
 
 }
+// ==========================================
+// DELETE GALLERY IMAGE
+// ==========================================
+
+async function deleteGallery(id) {
+
+    const confirmed = confirmDelete(
+        "Are you sure you want to delete this image?"
+    );
+
+    if (!confirmed) return;
+
+    showLoader();
+
+    try {
+
+        const image = galleryData.find(
+            item => item.id === id
+        );
+
+        if (!image) {
+
+            throw new Error(
+                "Gallery image not found."
+            );
+
+        }
+
+        // Delete database record
+
+        const { error } = await galleryClient
+
+            .from(TABLES.gallery)
+
+            .delete()
+
+            .eq("id", id);
+
+        if (error) {
+
+            throw error;
+
+        }
+
+        // Delete storage image (best effort)
+
+        if (image.image_url) {
+
+            try {
+
+                const filePath = image.image_url
+                    .split("/")
+                    .pop();
+
+                if (filePath) {
+
+                    await galleryClient.storage
+
+                        .from(BUCKETS.gallery)
+
+                        .remove([filePath]);
+
+                }
+
+            }
+
+            catch(storageError){
+
+                console.warn(
+                    "Unable to delete gallery image.",
+                    storageError
+                );
+
+            }
+
+        }
+
+        showToast(
+            "Gallery image deleted successfully.",
+            "success"
+        );
+
+        await loadGallery();
+
+    }
+
+    catch(err){
+
+        console.error(err);
+
+        showToast(
+            err.message,
+            "error"
+        );
+
+    }
+
+    hideLoader();
+
+}
+
+// ==========================================
+// CLOSE MODAL
+// ==========================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        const closeBtn = document.getElementById(
+            "closeGalleryModal"
+        );
+
+        if (closeBtn) {
+
+            closeBtn.addEventListener(
+                "click",
+                () => {
+
+                    resetForm("galleryForm");
+
+                    editingGalleryId = null;
+
+                    const preview = document.getElementById(
+                        "galleryPreview"
+                    );
+
+                    if (preview) {
+
+                        preview.innerHTML = "No Image";
+
+                    }
+
+                }
+            );
+
+        }
+
+        // Enable live preview
+
+        if (typeof previewImage === "function") {
+
+            previewImage(
+                "galleryImage",
+                "galleryPreview"
+            );
+
+        }
+
+    }
+);
+
+// ==========================================
+// REFRESH GALLERY
+// ==========================================
+
+window.refreshGallery = async function () {
+
+    await loadGallery();
+
+};
+
+// ==========================================
+// GLOBAL FUNCTIONS
+// ==========================================
+
+window.loadGallery = loadGallery;
+
+window.openAddGalleryModal =
+    openAddGalleryModal;
+
+window.saveGalleryImage =
+    saveGalleryImage;
+
+window.editGallery =
+    editGallery;
+
+window.deleteGallery =
+    deleteGallery;
+
+// ==========================================
+// END OF FILE
+// ==========================================
