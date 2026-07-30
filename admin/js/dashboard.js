@@ -1,98 +1,53 @@
-// ======================================
-// PRISM ADMIN DASHBOARD
-// ======================================
+// ==========================================
+// PRISM ADMIN PANEL
+// dashboard.js
+// ==========================================
 
-document.addEventListener("DOMContentLoaded", async () => {
-    await initializeDashboard();
+const db = window.supabaseClient;
+
+// ==========================================
+// INITIALIZE
+// ==========================================
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    initializeDashboard();
+
 });
+
+// ==========================================
+// INITIALIZE DASHBOARD
+// ==========================================
 
 async function initializeDashboard() {
 
-    const isLoggedIn = await checkSession();
+    initializeNavigation();
 
-    if (!isLoggedIn) return;
-
-    setupNavigation();
-    setupLogout();
     await loadDashboardStats();
 
 }
 
-// ======================================
-// AUTHENTICATION
-// ======================================
-
-async function checkSession() {
-
-    try {
-
-        const { data, error } =
-            await window.supabaseClient.auth.getSession();
-
-        if (error) {
-            console.error(error);
-            location.replace("login.html");
-            return false;
-        }
-
-        if (!data.session) {
-            location.replace("login.html");
-            return false;
-        }
-
-        return true;
-
-    } catch (err) {
-
-        console.error(err);
-        location.replace("login.html");
-        return false;
-
-    }
-
-}
-
-// ======================================
-// LOGOUT
-// ======================================
-
-function setupLogout() {
-
-    const btn = document.getElementById("logoutBtn");
-
-    if (!btn) return;
-
-    btn.addEventListener("click", async () => {
-
-        await window.supabaseClient.auth.signOut();
-
-        location.replace("login.html");
-
-    });
-
-}
-
-// ======================================
+// ==========================================
 // SIDEBAR NAVIGATION
-// ======================================
+// ==========================================
 
-function setupNavigation() {
+function initializeNavigation() {
 
-    const buttons = document.querySelectorAll(".sidebar button");
+    const navItems = document.querySelectorAll(".nav-item");
+
     const sections = document.querySelectorAll(".content-section");
 
-    buttons.forEach(button => {
+    navItems.forEach(item => {
 
-        button.addEventListener("click", () => {
+        item.addEventListener("click", () => {
 
-            if (button.id === "logoutBtn") return;
+            navItems.forEach(nav => {
 
-            buttons.forEach(b => b.classList.remove("active"));
+                nav.classList.remove("active");
 
-            button.classList.add("active");
+            });
 
-            const target =
-                button.dataset.section;
+            item.classList.add("active");
 
             sections.forEach(section => {
 
@@ -100,8 +55,9 @@ function setupNavigation() {
 
             });
 
-            const activeSection =
-                document.getElementById(target);
+            const target = item.dataset.section;
+
+            const activeSection = document.getElementById(target);
 
             if (activeSection) {
 
@@ -115,15 +71,15 @@ function setupNavigation() {
 
 }
 
-// ======================================
-// DASHBOARD STATS
-// ======================================
+// ==========================================
+// DASHBOARD COUNTS
+// ==========================================
 
 async function loadDashboardStats() {
 
-    try {
+    showLoader();
 
-        showLoader();
+    try {
 
         const [
             faculty,
@@ -132,50 +88,155 @@ async function loadDashboardStats() {
             newsletters
         ] = await Promise.all([
 
-            window.supabaseClient
-                .from("faculty")
-                .select("*", { count: "exact", head: true }),
+            getTableCount(TABLES.faculty),
 
-            window.supabaseClient
-                .from("datalabs")
-                .select("*", { count: "exact", head: true }),
+            getTableCount(TABLES.datalabs),
 
-            window.supabaseClient
-                .from("events")
-                .select("*", { count: "exact", head: true }),
+            getTableCount(TABLES.events),
 
-            window.supabaseClient
-                .from("newsletters")
-                .select("*", { count: "exact", head: true })
+            getTableCount(TABLES.newsletters)
 
         ]);
 
-        if (document.getElementById("facultyCount"))
-            document.getElementById("facultyCount").textContent =
-                faculty.count ?? 0;
+        setCount("facultyCount", faculty);
 
-        if (document.getElementById("datalabsCount"))
-            document.getElementById("datalabsCount").textContent =
-                datalabs.count ?? 0;
+        setCount("datalabsCount", datalabs);
 
-        if (document.getElementById("eventsCount"))
-            document.getElementById("eventsCount").textContent =
-                events.count ?? 0;
+        setCount("eventsCount", events);
 
-        if (document.getElementById("newslettersCount"))
-            document.getElementById("newslettersCount").textContent =
-                newsletters.count ?? 0;
-
-    } catch (err) {
-
-        console.error(err);
-
-        showToast("Failed to load dashboard", "error");
-
-    } finally {
-
-        hideLoader();
+        setCount("newslettersCount", newsletters);
 
     }
 
+    catch (err) {
+
+        console.error(err);
+
+        showToast(
+            "Failed to load dashboard.",
+            "error"
+        );
+
+    }
+
+    hideLoader();
+
 }
+
+// ==========================================
+// COUNT HELPER
+// ==========================================
+
+async function getTableCount(table) {
+
+    const {
+
+        count,
+        error
+
+    } = await db
+
+        .from(table)
+
+        .select("*", {
+
+            count: "exact",
+
+            head: true
+
+        });
+
+    if (error) {
+
+        console.error(error);
+
+        return 0;
+
+    }
+
+    return count || 0;
+
+}
+
+// ==========================================
+// UPDATE CARD
+// ==========================================
+
+function setCount(id, value) {
+
+    const element = document.getElementById(id);
+
+    if (!element) return;
+
+    element.textContent = value;
+
+}
+
+// ==========================================
+// REFRESH DASHBOARD
+// ==========================================
+
+window.refreshDashboard = async function () {
+
+    await loadDashboardStats();
+
+};
+
+// ==========================================
+// AUTO REFRESH AFTER CRUD
+// ==========================================
+
+window.updateDashboardCounts = function () {
+
+    loadDashboardStats();
+
+};
+
+// ==========================================
+// PAGE VISIBILITY REFRESH
+// ==========================================
+
+document.addEventListener(
+
+    "visibilitychange",
+
+    () => {
+
+        if (!document.hidden) {
+
+            loadDashboardStats();
+
+        }
+
+    }
+
+);
+
+// ==========================================
+// KEYBOARD SHORTCUT
+// CTRL + R (Dashboard Only)
+// ==========================================
+
+document.addEventListener(
+
+    "keydown",
+
+    e => {
+
+        if (
+
+            e.ctrlKey &&
+
+            e.key.toLowerCase() === "r"
+
+        ) {
+
+            e.preventDefault();
+
+            loadDashboardStats();
+
+        }
+
+    }
+
+);
