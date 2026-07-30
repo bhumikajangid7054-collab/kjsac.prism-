@@ -1,87 +1,146 @@
-// ======================================
-// PRISM ADMIN AUTH
-// ======================================
+// ==========================================
+// PRISM ADMIN PANEL
+// auth.js
+// ==========================================
+
+const client = window.supabaseClient;
 
 document.addEventListener("DOMContentLoaded", () => {
-
-    const form = document.getElementById("loginForm");
-
-    if (form) {
-        initializeLogin();
-    }
-
+    initializeAuth();
 });
 
-function showLoader() {
-    document.getElementById("loader")?.classList.remove("hidden");
-}
+async function initializeAuth() {
 
-function hideLoader() {
-    document.getElementById("loader")?.classList.add("hidden");
-}
+    const isLoginPage = window.location.pathname.includes("login.html");
 
-function showToast(message, type = "success") {
+    const {
+        data: { session }
+    } = await client.auth.getSession();
 
-    const container = document.getElementById("toastContainer");
+    // -----------------------------
+    // LOGIN PAGE
+    // -----------------------------
 
-    if (!container) {
-        alert(message);
-        return;
-    }
+    if (isLoginPage) {
 
-    const toast = document.createElement("div");
+        if (session) {
+            window.location.href = "dashboard.html";
+            return;
+        }
 
-    toast.className = `toast ${type}`;
-    toast.textContent = message;
+        const loginForm = document.getElementById("loginForm");
 
-    container.appendChild(toast);
+        if (loginForm) {
 
-    setTimeout(() => {
-        toast.remove();
-    }, 3000);
-}
-
-function initializeLogin() {
-
-    const form = document.getElementById("loginForm");
-
-    form.addEventListener("submit", async (e) => {
-
-        e.preventDefault();
-
-        const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value;
-
-        showLoader();
-
-        try {
-
-            const { data, error } =
-                await window.supabaseClient.auth.signInWithPassword({
-                    email,
-                    password
-                });
-
-            if (error) throw error;
-
-            showToast("Login Successful");
-
-            setTimeout(() => {
-                window.location.href = "dashboard.html";
-            }, 1000);
-
-        } catch (err) {
-
-            console.error(err);
-
-            showToast(err.message, "error");
-
-        } finally {
-
-            hideLoader();
+            loginForm.addEventListener("submit", loginUser);
 
         }
 
-    });
+        return;
+    }
+
+    // -----------------------------
+    // DASHBOARD
+    // -----------------------------
+
+    if (!session) {
+
+        window.location.href = "login.html";
+        return;
+
+    }
+
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    if (logoutBtn) {
+
+        logoutBtn.addEventListener("click", logoutUser);
+
+    }
 
 }
+
+// ==========================================
+// LOGIN
+// ==========================================
+
+async function loginUser(e) {
+
+    e.preventDefault();
+
+    const email = document.getElementById("email").value.trim();
+
+    const password = document.getElementById("password").value;
+
+    showLoader();
+
+    const { error } = await client.auth.signInWithPassword({
+
+        email,
+        password
+
+    });
+
+    hideLoader();
+
+    if (error) {
+
+        showToast(error.message, "error");
+        return;
+
+    }
+
+    showToast("Login Successful", "success");
+
+    setTimeout(() => {
+
+        window.location.href = "dashboard.html";
+
+    }, 700);
+
+}
+
+// ==========================================
+// LOGOUT
+// ==========================================
+
+async function logoutUser() {
+
+    const confirmLogout = confirm(
+        "Are you sure you want to logout?"
+    );
+
+    if (!confirmLogout) return;
+
+    showLoader();
+
+    await client.auth.signOut();
+
+    hideLoader();
+
+    window.location.href = "login.html";
+
+}
+
+// ==========================================
+// AUTH STATE LISTENER
+// ==========================================
+
+client.auth.onAuthStateChange((event, session) => {
+
+    const isLoginPage =
+        window.location.pathname.includes("login.html");
+
+    if (!session && !isLoginPage) {
+
+        window.location.href = "login.html";
+
+    }
+
+    if (session && isLoginPage) {
+
+        window.location.href = "dashboard.html";
+
+    }
+
+});
