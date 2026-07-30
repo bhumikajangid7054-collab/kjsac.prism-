@@ -5,61 +5,87 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
     <title>PRISM Admin Dashboard</title>
 
-    <link rel="stylesheet" href="admin.css">
+    <link
+        rel="stylesheet"
+        href="admin.css">
 
 </head>
 
 <body>
 
-<div class="admin-layout">
+<div class="dashboard">
 
-    <!-- =========================
+    <!-- ===========================
          SIDEBAR
-    ========================== -->
+    ============================ -->
 
     <aside class="sidebar">
 
         <div class="logo">
-            PRISM
+
+            <h2>PRISM</h2>
+
+            <span>Admin Panel</span>
+
         </div>
 
-        <ul>
+        <nav class="sidebar-menu">
 
-            <li class="nav-item active"
-                data-section="dashboardSection">
+            <button
+                class="menu-item active"
+                data-section="dashboard">
+
                 Dashboard
-            </li>
 
-            <li class="nav-item"
-                data-section="facultySection">
+            </button>
+
+            <button
+                class="menu-item"
+                data-section="faculty">
+
                 Faculty
-            </li>
 
-            <li class="nav-item"
-                data-section="datalabsSection">
+            </button>
+
+            <button
+                class="menu-item"
+                data-section="datalabs">
+
                 Data Labs
-            </li>
 
-            <li class="nav-item"
-                data-section="eventsSection">
+            </button>
+
+            <button
+                class="menu-item"
+                data-section="events">
+
                 Events
-            </li>
 
-            <li class="nav-item"
-                data-section="gallerySection">
+            </button>
+
+            <button
+                class="menu-item"
+                data-section="gallery">
+
                 Gallery
-            </li>
 
-            <li class="nav-item"
-                data-section="newslettersSection">
+            </button>
+
+            <button
+                class="menu-item"
+                data-section="newsletters">
+
                 Newsletters
-            </li>
 
-        </ul>
+            </button>
+
+        </nav>
 
         <button
             id="logoutBtn"
@@ -71,581 +97,722 @@
 
     </aside>
 
-    <!-- =========================
+    <!-- ===========================
          MAIN CONTENT
-    ========================== -->
+    ============================ -->
 
-    <main class="main">
+    <main class="main-content">
 
-        <div class="topbar">
-
-            <h2>
-                Admin Dashboard
-            </h2>
-
-        </div>
-
-        <!-- =========================
+        <!-- ===========================
              DASHBOARD
-        ========================== -->
+        ============================ -->
 
         <section
-            id="dashboardSection"
+            id="dashboard"
             class="content-section active">
 
-            <div class="stats-grid">
+            <div class="section-header">
 
-                <div class="stat-card">
+                <h1>
 
-                    <h3>
-                        Faculty
-                    </h3>
+                    Dashboard Overview
 
-                    <p id="facultyCount">
-                        0
-                    </p>
+                </h1>
 
-                </div>
+                <p>
 
-                <div class="stat-card">
-
-                    <h3>
-                        Data Labs
-                    </h3>
-
-                    <p id="datalabsCount">
-                        0
-                    </p>
-
-                </div>
-
-                <div class="stat-card">
-
-                    <h3>
-                        Events
-                    </h3>
-
-                    <p id="eventsCount">
-                        0
-                    </p>
-
-                </div>
-
-                <div class="stat-card">
-
-                    <h3>
-                        Newsletters
-                    </h3>
-
-                    <p id="newslettersCount">
-                        0
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="card">
-
-                <h3>
-                    Welcome to PRISM CMS
-                </h3>
-
-                <p class="mt-20">
-
-                    Use the sidebar to manage
-                    Faculty,
-                    Data Labs,
-                    Events,
-                    Gallery,
-                    and Newsletters.
+                    Welcome to the PRISM Administration Panel.
 
                 </p>
 
             </div>
 
+            <!-- ===========================
+                 STATS
+            ============================ -->
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <h2 id="facultyCount">
+
+                        0
+
+                    </h2>
+
+                    <p>
+
+                        Faculty Members
+
+                    </p>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <h2 id="eventsCount">
+
+                        0
+
+                    </h2>
+
+                    <p>
+
+                        Events
+
+                    </p>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <h2 id="galleryCount">
+
+                        0
+
+                    </h2>
+
+                    <p>
+
+                        Gallery Images
+
+                    </p>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <h2 id="newsletterCount">
+
+                        0
+
+                    </h2>
+
+                    <p>
+
+                        Newsletters
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- ===========================
+                 QUICK ACTIONS
+            ============================ -->
+
+            <div class="card">
+
+                <h2>
+
+                    Quick Actions
+
+                </h2>
+
+                <div class="quick-actions">
+
+                    <button
+                        class="primary-btn"
+                        onclick="openAddFacultyModal()">
+
+                        Add Faculty
+
+                    </button>
+
+                    <button
+                        class="primary-btn"
+                        onclick="openAddEventModal()">
+
+                        Add Event
+
+                    </button>
+
+                    <button
+                        class="primary-btn"
+                        onclick="openAddGalleryModal()">
+
+                        Upload Gallery Image
+
+                    </button>
+
+                    <button
+                        class="primary-btn"
+                        onclick="openAddNewsletterModal()">
+
+                        Publish Newsletter
+
+                    </button>
+
+                </div>
+
+            </div>
+
         </section>
-                <!-- =========================
-             FACULTY MANAGEMENT
-        ========================== -->
+
+                <!-- ===========================
+             FACULTY SECTION
+        ============================ -->
 
         <section
-            id="facultySection"
+            id="faculty"
             class="content-section">
 
             <div class="section-header">
 
-                <h2>
-                    Faculty Management
-                </h2>
+                <h1>
+
+                    Faculty
+
+                </h1>
 
                 <button
                     id="addFacultyBtn"
                     class="primary-btn">
 
-                    + Add Faculty
+                    Add Faculty
 
                 </button>
 
             </div>
 
-            <div id="facultyContainer"></div>
-
-        </section>
-
-        <!-- =========================
-             FACULTY MODAL
-        ========================== -->
-
-        <div
-            id="facultyModal"
-            class="modal">
-
-            <div class="modal-content">
-
-                <div class="modal-header">
-
-                    <h2 id="facultyModalTitle">
-                        Add Faculty
-                    </h2>
-
-                    <button
-                        id="closeFacultyModal"
-                        class="close-modal">
-
-                        &times;
-
-                    </button>
-
-                </div>
-
-                <form id="facultyForm">
-
-                    <input
-                        type="hidden"
-                        id="facultyId">
-
-                    <div class="input-group">
-
-                        <label>Name</label>
-
-                        <input
-                            type="text"
-                            id="facultyName"
-                            required>
-
-                    </div>
-
-                    <div class="input-group">
-
-                        <label>Designation</label>
-
-                        <input
-                            type="text"
-                            id="facultyDesignation"
-                            required>
-
-                    </div>
-
-                    <div class="input-group">
-
-                        <label>Subtitle</label>
-
-                        <input
-                            type="text"
-                            id="facultySubtitle">
-
-                    </div>
-
-                    <div class="input-group">
-
-                        <label>Faculty Image</label>
-
-                        <input
-                            type="file"
-                            id="facultyImage"
-                            accept="image/*">
-
-                    </div>
-
-                    <div
-                        id="facultyPreview"
-                        class="image-preview">
-
-                        No Image
-
-                    </div>
-
-                    <button
-                        type="submit"
-                        class="primary-btn">
-
-                        Save Faculty
-
-                    </button>
-
-                </form>
+            <div
+                id="facultyContainer"
+                class="cards-grid">
 
             </div>
 
-        </div>
+        </section>
 
-        <!-- =========================
-             DATA LABS
-        ========================== -->
+        <!-- ===========================
+             DATA LABS SECTION
+        ============================ -->
 
         <section
-            id="datalabsSection"
+            id="datalabs"
             class="content-section">
 
             <div class="section-header">
 
-                <h2>
+                <h1>
+
                     Data Labs
-                </h2>
+
+                </h1>
 
                 <button
-                    id="addDatalabBtn"
+                    id="addDataLabBtn"
                     class="primary-btn">
 
-                    + Add Data Lab
+                    Add Data Lab
 
                 </button>
 
             </div>
 
-            <div id="datalabsContainer"></div>
-
-        </section>
-
-        <!-- =========================
-             DATA LAB MODAL
-        ========================== -->
-
-        <div
-            id="datalabModal"
-            class="modal">
-
-            <div class="modal-content">
-
-                <div class="modal-header">
-
-                    <h2 id="datalabModalTitle">
-                        Add Data Lab
-                    </h2>
-
-                    <button
-                        id="closeDatalabModal"
-                        class="close-modal">
-
-                        &times;
-
-                    </button>
-
-                </div>
-
-                <form id="datalabForm">
-
-                    <input
-                        type="hidden"
-                        id="datalabId">
-
-                    <div class="input-group">
-
-                        <label>Title</label>
-
-                        <input
-                            type="text"
-                            id="datalabTitle"
-                            required>
-
-                    </div>
-
-                    <div class="input-group">
-
-                        <label>Description</label>
-
-                        <textarea
-                            id="datalabDescription"
-                            required></textarea>
-
-                    </div>
-
-                    <button
-                        type="submit"
-                        class="primary-btn">
-
-                        Save Data Lab
-
-                    </button>
-
-                </form>
+            <div
+                id="datalabsContainer"
+                class="cards-grid">
 
             </div>
 
-        </div>
+        </section>
 
-        <!-- =========================
-             EVENTS
-        ========================== -->
+                <!-- ===========================
+             EVENTS SECTION
+        ============================ -->
 
         <section
-            id="eventsSection"
+            id="events"
             class="content-section">
 
             <div class="section-header">
 
-                <h2>
+                <h1>
+
                     Events
-                </h2>
+
+                </h1>
 
                 <button
                     id="addEventBtn"
                     class="primary-btn">
 
-                    + Add Event
+                    Add Event
 
                 </button>
 
             </div>
 
-            <div id="eventsContainer"></div>
-
-        </section>
-
-        <!-- =========================
-             EVENT MODAL
-        ========================== -->
-
-        <div
-            id="eventModal"
-            class="modal">
-
-            <div class="modal-content">
-
-                <div class="modal-header">
-
-                    <h2 id="eventModalTitle">
-                        Add Event
-                    </h2>
-
-                    <button
-                        id="closeEventModal"
-                        class="close-modal">
-
-                        &times;
-
-                    </button>
-
-                </div>
-
-<form id="eventForm">
-
-    <input
-        type="hidden"
-        id="eventId">
-
-    <div class="input-group">
-
-        <label>Title</label>
-
-        <input
-            type="text"
-            id="eventTitle"
-            required>
-
-    </div>
-
-    <div class="input-group">
-
-        <label>Description</label>
-
-        <textarea
-            id="eventDescription"
-            required></textarea>
-
-    </div>
-
-    <div class="input-group">
-
-        <label>Cover Image</label>
-
-        <input
-            type="file"
-            id="eventImage"
-            accept="image/*">
-
-    </div>
-
-    <div
-        id="eventPreview"
-        class="image-preview">
-
-        No Image
-
-    </div>
-
-    <button
-        type="submit"
-        class="primary-btn">
-
-        Save Event
-
-    </button>
-
-</form>
+            <div
+                id="eventsContainer"
+                class="cards-grid">
 
             </div>
 
-        </div>
-                <!-- =========================
-             GALLERY
-        ========================== -->
+        </section>
+
+        <!-- ===========================
+             GALLERY SECTION
+        ============================ -->
 
         <section
-            id="gallerySection"
+            id="gallery"
             class="content-section">
 
             <div class="section-header">
 
-                <h2>
+                <h1>
+
                     Gallery
-                </h2>
+
+                </h1>
 
                 <button
                     id="addGalleryBtn"
                     class="primary-btn">
 
-                    + Add Image
+                    Upload Image
 
                 </button>
 
             </div>
 
-            <div id="galleryContainer"></div>
-
-        </section>
-
-        <!-- =========================
-             GALLERY MODAL
-        ========================== -->
-
-        <div
-            id="galleryModal"
-            class="modal">
-
-            <div class="modal-content">
-
-                <div class="modal-header">
-
-                    <h2 id="galleryModalTitle">
-                        Add Gallery Image
-                    </h2>
-
-                    <button
-                        id="closeGalleryModal"
-                        class="close-modal">
-
-                        &times;
-
-                    </button>
-
-                </div>
-
-                <form id="galleryForm">
-
-                    <input
-                        type="hidden"
-                        id="galleryId">
-
-                    <div class="input-group">
-
-                        <label>Event ID</label>
-
-                        <input
-                            type="number"
-                            id="galleryEventId">
-
-                    </div>
-
-                    <div class="input-group">
-
-                        <label>Select Image</label>
-
-                        <input
-                            type="file"
-                            id="galleryImage"
-                            accept="image/*"
-                            required>
-
-                    </div>
-
-                    <div
-                        id="galleryPreview"
-                        class="image-preview">
-
-                        No Image
-
-                    </div>
-
-                    <button
-                        type="submit"
-                        class="primary-btn">
-
-                        Save Image
-
-                    </button>
-
-                </form>
+            <div
+                id="galleryContainer"
+                class="cards-grid">
 
             </div>
 
-        </div>
+        </section>
 
-        <!-- =========================
-             NEWSLETTERS
-        ========================== -->
+        <!-- ===========================
+             NEWSLETTERS SECTION
+        ============================ -->
 
         <section
-            id="newslettersSection"
+            id="newsletters"
             class="content-section">
 
             <div class="section-header">
 
-                <h2>
+                <h1>
+
                     Newsletters
-                </h2>
+
+                </h1>
 
                 <button
                     id="addNewsletterBtn"
                     class="primary-btn">
 
-                    + Add Newsletter
+                    Add Newsletter
 
                 </button>
 
             </div>
 
-            <div id="newslettersContainer"></div>
+            <div
+                id="newsletterContainer"
+                class="cards-grid">
+
+            </div>
 
         </section>
 
-        <!-- =========================
-             NEWSLETTER MODAL
-        ========================== -->
+    </main>
 
-     <div id="newsletterModal" class="modal">
+</div>
+
+    <!-- ==========================================
+     FACULTY MODAL
+========================================== -->
+
+<div
+    id="facultyModal"
+    class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2 id="facultyModalTitle">
+
+                Add Faculty
+
+            </h2>
+
+            <button
+                type="button"
+                id="closeFacultyModal"
+                class="close-btn"
+                onclick="closeModal('facultyModal')">
+
+                &times;
+
+            </button>
+
+        </div>
+
+        <form id="facultyForm">
+
+            <input
+                type="hidden"
+                id="facultyId">
+
+            <div class="form-group">
+
+                <label>Name</label>
+
+                <input
+                    type="text"
+                    id="facultyName"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Designation</label>
+
+                <input
+                    type="text"
+                    id="facultyDesignation"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Email</label>
+
+                <input
+                    type="email"
+                    id="facultyEmail">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Image</label>
+
+                <input
+                    type="file"
+                    id="facultyImage"
+                    accept="image/*">
+
+            </div>
+
+            <div
+                id="facultyPreview"
+                class="image-preview">
+
+                No Image
+
+            </div>
+
+            <button
+                type="submit"
+                class="primary-btn">
+
+                Save Faculty
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- ==========================================
+     DATA LAB MODAL
+========================================== -->
+
+<div
+    id="dataLabModal"
+    class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2 id="dataLabModalTitle">
+
+                Add Data Lab
+
+            </h2>
+
+            <button
+                type="button"
+                id="closeDataLabModal"
+                class="close-btn"
+                onclick="closeModal('dataLabModal')">
+
+                &times;
+
+            </button>
+
+        </div>
+
+        <form id="dataLabForm">
+
+            <input
+                type="hidden"
+                id="dataLabId">
+
+            <div class="form-group">
+
+                <label>Category</label>
+
+                <input
+                    type="text"
+                    id="dataLabCategory"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Title</label>
+
+                <input
+                    type="text"
+                    id="dataLabTitle"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Description</label>
+
+                <textarea
+                    id="dataLabDescription"
+                    rows="5"
+                    required></textarea>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Document</label>
+
+                <input
+                    type="file"
+                    id="dataLabFile"
+                    accept=".pdf,.doc,.docx,.ppt,.pptx">
+
+            </div>
+
+            <button
+                type="submit"
+                class="primary-btn">
+
+                Save Data Lab
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- ==========================================
+     EVENT MODAL
+========================================== -->
+
+<div
+    id="eventModal"
+    class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2 id="eventModalTitle">
+
+                Add Event
+
+            </h2>
+
+            <button
+                type="button"
+                id="closeEventModal"
+                class="close-btn"
+                onclick="closeModal('eventModal')">
+
+                &times;
+
+            </button>
+
+        </div>
+
+        <form id="eventForm">
+
+            <input
+                type="hidden"
+                id="eventId">
+
+            <div class="form-group">
+
+                <label>Title</label>
+
+                <input
+                    type="text"
+                    id="eventTitle"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Description</label>
+
+                <textarea
+                    id="eventDescription"
+                    rows="5"
+                    required></textarea>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Cover Image</label>
+
+                <input
+                    type="file"
+                    id="eventImage"
+                    accept="image/*">
+
+            </div>
+
+            <div
+                id="eventPreview"
+                class="image-preview">
+
+                No Image
+
+            </div>
+
+            <button
+                type="submit"
+                class="primary-btn">
+
+                Save Event
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- ==========================================
+     GALLERY MODAL
+========================================== -->
+
+<div
+    id="galleryModal"
+    class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2 id="galleryModalTitle">
+
+                Add Gallery Image
+
+            </h2>
+
+            <button
+                type="button"
+                id="closeGalleryModal"
+                class="close-btn"
+                onclick="closeModal('galleryModal')">
+
+                &times;
+
+            </button>
+
+        </div>
+
+        <form id="galleryForm">
+
+            <input
+                type="hidden"
+                id="galleryId">
+
+            <div class="form-group">
+
+                <label>Event ID</label>
+
+                <input
+                    type="number"
+                    id="galleryEventId"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Image</label>
+
+                <input
+                    type="file"
+                    id="galleryImage"
+                    accept="image/*"
+                    required>
+
+            </div>
+
+            <div
+                id="galleryPreview"
+                class="image-preview">
+
+                No Image
+
+            </div>
+
+            <button
+                type="submit"
+                class="primary-btn">
+
+                Save Image
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- ==========================================
+     NEWSLETTER MODAL
+========================================== -->
+
+<div
+    id="newsletterModal"
+    class="modal">
 
     <div class="modal-content">
 
         <div class="modal-header">
 
             <h2 id="newsletterModalTitle">
+
                 Add Newsletter
+
             </h2>
 
             <button
                 type="button"
+                id="closeNewsletterModal"
                 class="close-btn"
                 onclick="closeModal('newsletterModal')">
 
@@ -693,12 +860,13 @@
 
             <div class="form-group">
 
-                <label>Newsletter PDF</label>
+                <label>PDF File</label>
 
                 <input
                     type="file"
                     id="newsletterPdf"
-                    accept=".pdf,application/pdf">
+                    accept=".pdf,application/pdf"
+                    required>
 
             </div>
 
@@ -716,26 +884,35 @@
 
 </div>
 
-<!-- =========================
-     GLOBAL COMPONENTS
-========================= -->
+<!-- ==========================================
+     LOADER
+========================================== -->
 
 <div
     id="loader"
-    class="hidden">
+    class="loader hidden">
+
+    <div class="spinner"></div>
+
 </div>
 
-<div id="toastContainer"></div>
+<!-- ==========================================
+     TOAST
+========================================== -->
 
-<!-- =========================
-     SUPABASE
-========================= -->
+<div
+    id="toast"
+    class="toast">
+
+    <span id="toastMessage"></span>
+
+</div>
+
+<!-- ==========================================
+     SCRIPTS
+========================================== -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<!-- =========================
-     APPLICATION FILES
-========================= -->
 
 <script src="js/config.js"></script>
 
