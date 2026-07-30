@@ -1,1 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRISM Gallery</title>
 
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+<header class="page-header">
+    <h1 id="galleryTitle">Event Gallery</h1>
+
+    <a href="events.html" class="back-btn">
+        ← Back to Events
+    </a>
+</header>
+
+<section class="gallery-container" id="gallery"></section>
+
+<div class="lightbox" id="lightbox">
+
+    <span class="close-btn">&times;</span>
+
+    <button class="prev">&#10094;</button>
+
+    <img id="lightboxImg">
+
+    <button class="next">&#10095;</button>
+
+</div>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+const event = params.get("event");
+
+const gallery = document.getElementById("gallery");
+const title = document.getElementById("galleryTitle");
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightboxImg");
+
+let currentIndex = 0;
+
+const events = {
+
+aawaz:{
+title:"Aawaz-e-Youth",
+folder:"../images/aawaz/",
+count:10
+},
+
+"youth-parliament":{
+title:"Youth Parliament",
+folder:"../images/youth-parliament/",
+count:4
+},
+
+"farewell-2026":{
+title:"Farewell 2026",
+folder:"../images/farewell-2026/",
+count:8
+},
+
+"psa-prelude":{
+title:"PSA Prelude",
+folder:"../images/psa-prelude/",
+count:1
+}
+
+};
+
+const data = events[event];
+
+if(data){
+
+title.innerText=data.title;
+
+for(let i=1;i<=data.count;i++){
+
+const img=document.createElement("img");
+
+img.src=data.folder+i+".jpg";
+
+img.alt=data.title;
+
+img.classList.add("gallery-image");
+
+img.onclick=()=>{
+
+currentIndex=i;
+
+lightbox.style.display="flex";
+
+lightboxImg.src=img.src;
+
+};
+
+gallery.appendChild(img);
+
+}
+
+}
+
+document.querySelector(".close-btn").onclick=()=>{
+
+lightbox.style.display="none";
+
+};
+document.querySelector(".next").onclick = () => {
+
+    if(currentIndex < data.count){
+
+        currentIndex++;
+
+    }else{
+
+        currentIndex = 1;
+
+    }
+
+    lightboxImg.src = data.folder + currentIndex + ".jpg";
+
+};
+
+document.querySelector(".prev").onclick = () => {
+
+    if(currentIndex > 1){
+
+        currentIndex--;
+
+    }else{
+
+        currentIndex = data.count;
+
+    }
+
+    lightboxImg.src = data.folder + currentIndex + ".jpg";
+
+};
+
+lightbox.onclick = (e) => {
+
+    if(e.target === lightbox){
+
+        lightbox.style.display = "none";
+
+    }
+
+};
+
+document.addEventListener("keydown", (e)=>{
+
+    if(lightbox.style.display==="flex"){
+
+        if(e.key==="ArrowRight"){
+
+            document.querySelector(".next").click();
+
+        }
+
+        if(e.key==="ArrowLeft"){
+
+            document.querySelector(".prev").click();
+
+        }
+
+        if(e.key==="Escape"){
+
+            lightbox.style.display="none";
+
+        }
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
