@@ -4,17 +4,20 @@
 <head>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>PRISM Admin Dashboard</title>
 
-    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet"
+          href="admin.css">
 
 </head>
 
-<body data-page="dashboard">
+<body>
 
-<div class="dashboard">
+<div class="dashboard-container">
 
     <!-- =========================
          SIDEBAR
@@ -22,65 +25,47 @@
 
     <aside class="sidebar">
 
-        <div class="sidebar-logo">
+        <h2 class="logo">
+            PRISM
+        </h2>
 
-            <h2>PRISM</h2>
-
-            <p>Admin Panel</p>
-
-        </div>
-
-        <nav class="sidebar-nav">
+        <nav>
 
             <button class="nav-btn active"
-                    data-section="dashboard">
-
-                📊 Dashboard
-
+                    data-section="dashboardSection">
+                Dashboard
             </button>
 
             <button class="nav-btn"
-                    data-section="faculty">
-
-                👨‍🏫 Faculty
-
+                    data-section="facultySection">
+                Faculty
             </button>
 
             <button class="nav-btn"
-                    data-section="datalabs">
-
-                📚 DataLabs
-
+                    data-section="datalabsSection">
+                Data Labs
             </button>
 
             <button class="nav-btn"
-                    data-section="events">
-
-                🎉 Events
-
+                    data-section="eventsSection">
+                Events
             </button>
 
             <button class="nav-btn"
-                    data-section="gallery">
-
-                🖼 Gallery
-
+                    data-section="gallerySection">
+                Gallery
             </button>
 
             <button class="nav-btn"
-                    data-section="newsletters">
-
-                📰 Newsletters
-
+                    data-section="newslettersSection">
+                Newsletters
             </button>
 
         </nav>
 
         <button id="logoutBtn"
                 class="logout-btn">
-
             Logout
-
         </button>
 
     </aside>
@@ -93,104 +78,75 @@
 
         <header class="topbar">
 
-            <div>
+            <h1>
+                Admin Dashboard
+            </h1>
 
-                <h1 id="pageTitle">
-
-                    Dashboard
-
-                </h1>
-
-                <p>
-
-                    Welcome to PRISM Admin
-
-                </p>
-
-            </div>
+            <p>
+                Welcome to the PRISM Administration Panel
+            </p>
 
         </header>
+
+        <!-- =========================
+             DASHBOARD
+        ========================== -->
 
         <section id="dashboardSection"
                  class="content-section active">
 
             <div class="stats-grid">
-
-                        <div class="stat-card">
-
+                            <div class="stat-card">
                 <h3>Total Faculty</h3>
-
-                <span id="facultyCount">0</span>
-
+                <h2 id="facultyCount">0</h2>
             </div>
 
             <div class="stat-card">
-
-                <h3>Total DataLabs</h3>
-
-                <span id="datalabsCount">0</span>
-
+                <h3>Data Labs</h3>
+                <h2 id="datalabsCount">0</h2>
             </div>
 
             <div class="stat-card">
-
-                <h3>Total Events</h3>
-
-                <span id="eventsCount">0</span>
-
+                <h3>Events</h3>
+                <h2 id="eventsCount">0</h2>
             </div>
 
             <div class="stat-card">
-
-                <h3>Total Newsletters</h3>
-
-                <span id="newslettersCount">0</span>
-
+                <h3>Newsletters</h3>
+                <h2 id="newslettersCount">0</h2>
             </div>
 
-        </div>
-
-        <div class="dashboard-card">
-
-            <h2>
-
-                Quick Actions
-
-            </h2>
+            </div>
 
             <div class="quick-actions">
 
-                <button class="action-btn"
-                        data-section="faculty">
+                <h2>Quick Actions</h2>
 
-                    + Add Faculty
+                <div class="action-grid">
 
-                </button>
+                    <button id="addFacultyBtn">
+                        Add Faculty
+                    </button>
 
-                <button class="action-btn"
-                        data-section="events">
+                    <button id="addDatalabBtn">
+                        Add Data Lab
+                    </button>
 
-                    + Add Event
+                    <button id="addEventBtn">
+                        Add Event
+                    </button>
 
-                </button>
+                    <button id="uploadNewsletterBtn">
+                        Upload Newsletter
+                    </button>
 
-                <button class="action-btn"
-                        data-section="gallery">
+                    <button id="uploadGalleryBtn">
+                        Upload Gallery Images
+                    </button>
 
-                    + Upload Images
-
-                </button>
-
-                <button class="action-btn"
-                        data-section="newsletters">
-
-                    + Upload Newsletter
-
-                </button>
+                </div>
 
             </div>
-
-        </div>
 
         </section>
 
@@ -201,14 +157,22 @@
         <section id="facultySection"
                  class="content-section">
 
+            <h2>Faculty Management</h2>
+
+            <div id="facultyContainer"></div>
+
         </section>
 
         <!-- =========================
-             DATALABS
+             DATA LABS
         ========================== -->
 
         <section id="datalabsSection"
                  class="content-section">
+
+            <h2>Data Labs</h2>
+
+            <div id="datalabsContainer"></div>
 
         </section>
 
@@ -219,6 +183,10 @@
         <section id="eventsSection"
                  class="content-section">
 
+            <h2>Events</h2>
+
+            <div id="eventsContainer"></div>
+
         </section>
 
         <!-- =========================
@@ -228,6 +196,10 @@
         <section id="gallerySection"
                  class="content-section">
 
+            <h2>Gallery</h2>
+
+            <div id="galleryContainer"></div>
+
         </section>
 
         <!-- =========================
@@ -236,9 +208,13 @@
 
         <section id="newslettersSection"
                  class="content-section">
-                    </section>
 
-    </main>
+            <h2>Newsletters</h2>
+
+            <div id="newslettersContainer"></div>
+
+        </section>
+            </main>
 
 </div>
 
@@ -249,34 +225,27 @@
 <div id="loader" class="hidden"></div>
 
 <!-- =========================
-     TOASTS
+     TOAST CONTAINER
 ========================= -->
 
 <div id="toastContainer"></div>
 
 <!-- =========================
-     SCRIPTS
+     JAVASCRIPT
 ========================= -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script src="js/config.js"></script>
-
 <script src="js/auth.js"></script>
-
 <script src="js/ui.js"></script>
-
 <script src="js/dashboard.js"></script>
-
 <script src="js/faculty.js"></script>
-
 <script src="js/datalabs.js"></script>
-
 <script src="js/events.js"></script>
-
 <script src="js/gallery.js"></script>
-
 <script src="js/newsletters.js"></script>
 
 </body>
+
 </html>
