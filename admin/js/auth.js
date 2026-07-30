@@ -5,59 +5,53 @@
 
 const client = window.supabaseClient;
 
-document.addEventListener("DOMContentLoaded", () => {
-    initializeAuth();
-});
+document.addEventListener("DOMContentLoaded", initializeAuth);
 
 async function initializeAuth() {
+    const isLoginPage = window.location.pathname.endsWith("login.html");
 
-    const isLoginPage = window.location.pathname.includes("login.html");
+    try {
+        const {
+            data: { session },
+            error
+        } = await client.auth.getSession();
 
-    const {
-        data: { session }
-    } = await client.auth.getSession();
+        if (error) {
+            console.error(error);
+        }
 
-    // -----------------------------
-    // LOGIN PAGE
-    // -----------------------------
+        // LOGIN PAGE
+        if (isLoginPage) {
 
-    if (isLoginPage) {
+            if (session) {
+                window.location.replace("dashboard.html");
+                return;
+            }
 
-        if (session) {
-            window.location.href = "dashboard.html";
+            const loginForm = document.getElementById("loginForm");
+
+            if (loginForm) {
+                loginForm.addEventListener("submit", loginUser);
+            }
+
             return;
         }
 
-        const loginForm = document.getElementById("loginForm");
-
-        if (loginForm) {
-
-            loginForm.addEventListener("submit", loginUser);
-
+        // PROTECTED PAGES
+        if (!session) {
+            window.location.replace("login.html");
+            return;
         }
 
-        return;
+        const logoutBtn = document.getElementById("logoutBtn");
+
+        if (logoutBtn) {
+            logoutBtn.addEventListener("click", logoutUser);
+        }
+
+    } catch (err) {
+        console.error(err);
     }
-
-    // -----------------------------
-    // DASHBOARD
-    // -----------------------------
-
-    if (!session) {
-
-        window.location.href = "login.html";
-        return;
-
-    }
-
-    const logoutBtn = document.getElementById("logoutBtn");
-
-    if (logoutBtn) {
-
-        logoutBtn.addEventListener("click", logoutUser);
-
-    }
-
 }
 
 // ==========================================
@@ -69,34 +63,35 @@ async function loginUser(e) {
     e.preventDefault();
 
     const email = document.getElementById("email").value.trim();
-
     const password = document.getElementById("password").value;
 
     showLoader();
 
-    const { error } = await client.auth.signInWithPassword({
+    try {
 
-        email,
-        password
+        const { error } = await client.auth.signInWithPassword({
+            email,
+            password
+        });
 
-    });
+        hideLoader();
 
-    hideLoader();
+        if (error) {
+            showToast(error.message, "error");
+            return;
+        }
 
-    if (error) {
+        showToast("Login successful", "success");
 
-        showToast(error.message, "error");
-        return;
+        window.location.replace("dashboard.html");
+
+    } catch (err) {
+
+        hideLoader();
+        console.error(err);
+        showToast("Unable to login.", "error");
 
     }
-
-    showToast("Login Successful", "success");
-
-    setTimeout(() => {
-
-        window.location.href = "dashboard.html";
-
-    }, 700);
 
 }
 
@@ -106,19 +101,20 @@ async function loginUser(e) {
 
 async function logoutUser() {
 
-    const confirmLogout = confirm(
-        "Are you sure you want to logout?"
-    );
-
-    if (!confirmLogout) return;
+    if (!confirm("Are you sure you want to logout?")) return;
 
     showLoader();
 
-    await client.auth.signOut();
+    try {
 
-    hideLoader();
+        await client.auth.signOut();
 
-    window.location.href = "login.html";
+    } finally {
+
+        hideLoader();
+        window.location.replace("login.html");
+
+    }
 
 }
 
@@ -126,21 +122,16 @@ async function logoutUser() {
 // AUTH STATE LISTENER
 // ==========================================
 
-client.auth.onAuthStateChange((event, session) => {
+client.auth.onAuthStateChange((_event, session) => {
 
-    const isLoginPage =
-        window.location.pathname.includes("login.html");
+    const isLoginPage = window.location.pathname.endsWith("login.html");
 
     if (!session && !isLoginPage) {
-
-        window.location.href = "login.html";
-
+        window.location.replace("login.html");
     }
 
     if (session && isLoginPage) {
-
-        window.location.href = "dashboard.html";
-
+        window.location.replace("dashboard.html");
     }
 
 });
