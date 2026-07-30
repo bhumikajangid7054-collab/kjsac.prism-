@@ -1223,9 +1223,9 @@ a:hover{
 .newsletter-grid{
 
     display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,320px));
 
-    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-
+justify-content:center;
     gap:35px;
 
 }
@@ -1272,15 +1272,38 @@ a:hover{
     color:var(--text-light);
 
 }
+.newsletter-card{
+
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius);
+
+    overflow:hidden;
+
+    box-shadow:var(--shadow);
+
+    transition:var(--transition);
+
+    padding-bottom:25px;
+
+}
 .newsletter-cover{
 
-    width:100%;
+    width:220px;
 
-    height:420px;
+    height:300px;
 
     object-fit:cover;
 
     display:block;
+
+    margin:25px auto 15px;
+
+    border-radius:10px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,0.15);
 
 }
 
