@@ -1,8 +1,6 @@
 // ======================================
-// FACULTY MODULE
+// FACULTY MODULE - PART 1
 // ======================================
-
-let editingFacultyId = null;
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -12,58 +10,109 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function initializeFaculty() {
 
-    const addBtn = document.getElementById("addFacultyBtn");
+    loadFaculty();
 
-    const cancelBtn = document.getElementById("cancelFaculty");
+}
 
-    const form = document.getElementById("facultyForm");
+// ======================================
+// LOAD FACULTY
+// ======================================
 
-    if (addBtn) {
+async function loadFaculty() {
 
-        addBtn.addEventListener("click", openFacultyModal);
+    const container = document.getElementById("facultyContainer");
+
+    if (!container) return;
+
+    showLoader();
+
+    try {
+
+        const { data, error } = await window.supabaseClient
+            .from("faculty")
+            .select("*")
+            .order("id", { ascending: true });
+
+        if (error) throw error;
+
+        if (!data || data.length === 0) {
+
+            container.innerHTML = `
+                <p>No faculty members found.</p>
+            `;
+
+            return;
+
+        }
+
+        container.innerHTML = "";
+
+        data.forEach(member => {
+
+            container.innerHTML += `
+
+                <div class="faculty-card">
+
+                    <img
+                        src="${member.image_url}"
+                        alt="${member.name}"
+                        class="faculty-image">
+
+                    <div class="faculty-details">
+
+                        <h3>${member.name}</h3>
+
+                        <p><strong>${member.designation}</strong></p>
+
+                        <p>${member.subtitle}</p>
+
+                        <div class="faculty-actions">
+
+                            <button onclick="editFaculty(${member.id})">
+                                Edit
+                            </button>
+
+                            <button onclick="deleteFaculty(${member.id})">
+                                Delete
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        });
+
+    } catch (err) {
+
+        console.error(err);
+
+        showToast("Unable to load faculty.", "error");
+
+    } finally {
+
+        hideLoader();
 
     }
 
-    if (cancelBtn) {
+}
 
-        cancelBtn.addEventListener("click", closeFacultyModal);
+// ======================================
+// PLACEHOLDERS
+// ======================================
 
-    }
+function editFaculty(id) {
 
-    if (form) {
-
-        form.addEventListener("submit", saveFaculty);
-
-    }
+    showToast("Edit will be added in Part 4.");
 
 }
 
-function openFacultyModal() {
+function deleteFaculty(id) {
 
-    editingFacultyId = null;
-
-    document.getElementById("facultyForm").reset();
-
-    document.getElementById("facultyModalTitle").textContent =
-        "Add Faculty";
-
-    document.getElementById("facultyModal")
-        .classList.remove("hidden");
+    showToast("Delete will be added in Part 5.");
 
 }
 
-function closeFacultyModal() {
-
-    document.getElementById("facultyModal")
-        .classList.add("hidden");
-
-}
-async function saveFaculty(event) {
-
-    event.preventDefault();
-
-    showToast("Faculty module is connected successfully.");
-
-    closeFacultyModal();
-
-}
