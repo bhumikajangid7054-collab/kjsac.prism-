@@ -154,14 +154,21 @@
              FACULTY
         ========================== -->
 
-        <section id="facultySection"
-                 class="content-section">
+ <section id="facultySection" class="content-section">
 
-            <h2>Faculty Management</h2>
+    <div class="section-header">
 
-            <div id="facultyContainer"></div>
+        <h2>Faculty Management</h2>
 
-        </section>
+        <button id="addFacultyBtn" class="primary-btn">
+            + Add Faculty
+        </button>
+
+    </div>
+
+    <div id="facultyContainer"></div>
+
+</section>
 
         <!-- =========================
              DATA LABS
@@ -221,7 +228,56 @@
 <!-- =========================
      LOADER
 ========================= -->
+<div id="facultyModal" class="modal hidden">
 
+    <div class="modal-content">
+
+        <h2 id="facultyModalTitle">
+            Add Faculty
+        </h2>
+
+        <form id="facultyForm">
+
+            <input
+                type="text"
+                id="facultyName"
+                placeholder="Faculty Name"
+                required>
+
+            <input
+                type="text"
+                id="facultyDesignation"
+                placeholder="Designation"
+                required>
+
+            <textarea
+                id="facultyBio"
+                placeholder="Short Bio"></textarea>
+
+            <input
+                type="file"
+                id="facultyImage"
+                accept="image/*">
+
+            <div class="modal-actions">
+
+                <button type="submit">
+                    Save
+                </button>
+
+                <button
+                    type="button"
+                    id="cancelFaculty">
+                    Cancel
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
 <div id="loader" class="hidden"></div>
 
 <!-- =========================
