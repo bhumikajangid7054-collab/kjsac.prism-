@@ -57,14 +57,14 @@ function initializeLogin() {
         try {
 
             const { data, error } =
-                await supabase.auth.signInWithPassword({
+                await window.supabaseClient.auth.signInWithPassword({
                     email,
                     password
                 });
 
             if (error) throw error;
 
-            showToast("Login successful!");
+            showToast("Login Successful");
 
             setTimeout(() => {
                 window.location.href = "dashboard.html";
