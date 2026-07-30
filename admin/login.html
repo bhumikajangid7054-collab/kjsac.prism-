@@ -1,23 +1,14 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
 
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>PRISM Admin Login</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap"
-        rel="stylesheet">
-
-   <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="admin.css">
 
 </head>
 
@@ -27,35 +18,43 @@
 
         <div class="login-card">
 
-            <h1>PRISM</h1>
+            <div class="logo">
 
-            <h2>Admin Portal</h2>
+                <h1>PRISM</h1>
 
-            <p>
+                <p>Department of Political Science</p>
 
-                Department of Political Science<br>
+            </div>
 
-                K. J. Somaiya College of Arts & Commerce (Autonomous)<br>
-
-                Reaccredited by NAAC with Grade 'A'
-
-            </p>
+            <h2>Administrator Login</h2>
 
             <form id="loginForm">
 
-                <input
-                    type="email"
-                    id="email"
-                    placeholder="Email Address"
-                    required>
+                <div class="form-group">
 
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Password"
-                    required>
+                    <label for="email">Email</label>
 
-                <button type="submit">
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                        required>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="password">Password</label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter your password"
+                        required>
+
+                </div>
+
+                <button type="submit" id="loginBtn">
 
                     Login
 
@@ -67,11 +66,18 @@
 
     </div>
 
+    <!-- Loader -->
+    <div id="loader" class="hidden"></div>
+
+    <!-- Toast Messages -->
+    <div id="toastContainer"></div>
+
+    <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <script src="../js/supabase.js" defer></script>
-
-    <script src="../js/auth.js" defer></script>
+    <!-- Project Files -->
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
 
 </body>
 
