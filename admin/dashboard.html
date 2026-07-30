@@ -439,53 +439,61 @@
 
                 </div>
 
-                <form id="eventForm">
+<form id="eventForm">
 
-                    <input
-                        type="hidden"
-                        id="eventId">
+    <input
+        type="hidden"
+        id="eventId">
 
-                    <div class="input-group">
+    <div class="input-group">
 
-                        <label>Event Title</label>
+        <label>Title</label>
 
-                        <input
-                            type="text"
-                            id="eventTitle"
-                            required>
+        <input
+            type="text"
+            id="eventTitle"
+            required>
 
-                    </div>
+    </div>
 
-                    <div class="input-group">
+    <div class="input-group">
 
-                        <label>Date</label>
+        <label>Description</label>
 
-                        <input
-                            type="date"
-                            id="eventDate"
-                            required>
+        <textarea
+            id="eventDescription"
+            required></textarea>
 
-                    </div>
+    </div>
 
-                    <div class="input-group">
+    <div class="input-group">
 
-                        <label>Description</label>
+        <label>Cover Image</label>
 
-                        <textarea
-                            id="eventDescription"
-                            required></textarea>
+        <input
+            type="file"
+            id="eventImage"
+            accept="image/*">
 
-                    </div>
+    </div>
 
-                    <button
-                        type="submit"
-                        class="primary-btn">
+    <div
+        id="eventPreview"
+        class="image-preview">
 
-                        Save Event
+        No Image
 
-                    </button>
+    </div>
 
-                </form>
+    <button
+        type="submit"
+        class="primary-btn">
+
+        Save Event
+
+    </button>
+
+</form>
 
             </div>
 
