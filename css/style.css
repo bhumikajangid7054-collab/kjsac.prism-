@@ -1127,9 +1127,23 @@ a:hover{
 
 .domain-title{
 
-    text-align:center;
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
 
     margin-bottom:40px;
+
+    width:100%;
+
+}
+
+.domain-title h2{
+
+    margin:0;
+
+    text-align:center;
 
 }
 
@@ -2068,11 +2082,11 @@ font-size:36px;
 
     color:#d1d5db;
 
-    line-height:1.8;
+    line-height:1.7;
 
     margin-bottom:22px;
 
-    text-align:justify;
+    text-align:left;
 
 }
 .dataset-card{
