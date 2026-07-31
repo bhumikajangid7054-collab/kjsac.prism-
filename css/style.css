@@ -1137,9 +1137,11 @@ a:hover{
 
     display:grid;
 
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    grid-template-columns:repeat(auto-fit, minmax(420px, 1fr));
 
     gap:30px;
+
+    align-items:start;
 
 }
 
@@ -2073,7 +2075,15 @@ font-size:36px;
     text-align:justify;
 
 }
+.dataset-card{
 
+    max-width:540px;
+
+    width:100%;
+
+    margin:auto;
+
+}
 .dataset-tags{
 
     display:flex;
